@@ -1,17 +1,40 @@
-const { BadRequestError } = require("../middlewares/errors");
-const Item = require("../models/item");
+const { BadRequestError } = require('../middlewares/errors');
+const Item = require('../models/item');
 
 class ItemsController {
   async create(req, res, next) {
-    // ...
+    try {
+      const { item } = req.body;
+
+      if(!item) throw new BadRequestError("item is required");
+
+      const newItem = await Item.create(item);
+      res.status(201).json({item: newItem});
+    } catch (error) {
+      next(error);
+    }
   }
 
   async getAll(req, res, next) {
-    // ...
+    try {
+      const items = await Item.find();
+      res.status(200).json({ items });
+    } catch (error) {
+      next(error);
+    }
   }
 
   async getById(req, res, next) {
-    // ...
+    try {
+      const { id } = req.params.id;
+
+      if(!id) throw new BadRequestError("id is required");
+      
+      const item = await Item.find(id);
+      res.status(200).json({ item: item });
+    } catch (error) {
+      next(error);
+    }
   }
 
   async updateById(req, res, next) {
