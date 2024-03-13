@@ -11,6 +11,12 @@ app.use(
   })
 );
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// database connection
+require("./config/db");
+
 app.get("/api", (req, res) => {
   res.json({
     message: "Welcome to the API",
