@@ -1,14 +1,88 @@
+const { BadRequestError, UnauthorizedError } = require("../middlewares/errors");
+const User = require("../models/user");
+const bcrypt = require("bcrypt");
+const { generateToken } = require("../utils/jwt");
+
 class AuthController {
   async login(req, res, next) {
-    // ...
+    try {
+      const { email, password } = req.body;
+
+      if (!email) throw new BadRequestError("Email is required");
+      if (!password) throw new BadRequestError("Password is required");
+
+      const user = await User.findOne({ email });
+      if (!user) throw new UnauthorizedError("Invalid email");
+
+      const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+      if (!isPasswordValid) throw new UnauthorizedError("Invalid password");
+
+      const payload = { id: user._id, role: user.role };
+      const token = generateToken(payload);
+
+      res
+        .status(200)
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          expires: new Date(Date.now() + 604800000),
+        })
+        .json({ user });
+    } catch (error) {
+      next(error);
+    }
   }
 
   async signup(req, res, next) {
-    // ...
+    try {
+      const { name, email, password, secret } = req.body;
+
+      if (secret !== process.env.SECRET_KEY_FOR_SIGNUP) {
+        throw new UnauthorizedError("Invalid secret key");
+      }
+
+      if (!name) throw new BadRequestError("Name is required");
+      if (!email) throw new BadRequestError("Email is required");
+      if (!password) throw new BadRequestError("Password is required");
+
+      const user = await User.findOne({ email });
+
+      if (user) throw new BadRequestError("Email already exists");
+
+      const passwordHash = await bcrypt.hash(password, 10);
+
+      const newUser = await User.create({
+        name,
+        email,
+        passwordHash,
+        role: "manager",
+      });
+
+      const payload = { id: newUser._id, role: newUser.role };
+      const token = generateToken(payload);
+
+      res
+        .status(201)
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          expires: new Date(Date.now() + 604800000),
+        })
+        .json({ user: newUser });
+    } catch (error) {
+      next(error);
+    }
   }
 
   async logout(req, res, next) {
-    // ...
+    try {
+      res
+        .status(200)
+        .clearCookie("token")
+        .json({ message: "User logged out successfully" });
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
