@@ -9,14 +9,10 @@ const dealSchema = new mongoose.Schema({
   ],
   type: {
     type: String,
-    enum: ["percentage", "direct"],
+    enum: ["percentage", "fixed"],
     required: true,
   },
   value: {
-    type: Number,
-    required: true,
-  },
-  maxDiscount: {
     type: Number,
     required: true,
   },
