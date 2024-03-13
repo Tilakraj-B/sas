@@ -1,5 +1,5 @@
 
-const Transaction = require("./models/Transaction");
+const Transaction = require("../models/transaction");
 
 class TransactionsController {
   async create(req, res, next) {
