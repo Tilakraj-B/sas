@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+const { errorHandler } = require("./middlewares/errors");
 
 const app = express();
 
@@ -17,6 +18,8 @@ app.get("/api", (req, res) => {
 });
 
 app.use("/api", require("./routes"));
+
+app.use(errorHandler);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

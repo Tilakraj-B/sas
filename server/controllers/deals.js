@@ -1,16 +1,11 @@
-const Deal = require('../models/deal');
+const Deal = require("../models/deal");
 
 class DealsController {
   async create(req, res, next) {
     try {
-      const newdeal = req.body;
-      const result = await Deal.create(newdeal);
-
-      if (result.status === 'ok') {
-        res.status(201).json(result);
-      } else {
-        throw new Error(result.message);
-      }
+      const { deal } = req.body;
+      const newDeal = await Deal.create(deal);
+      res.status(201).json({ deal: newDeal });
     } catch (error) {
       next(error);
     }
@@ -18,14 +13,9 @@ class DealsController {
 
   async deleteById(req, res, next) {
     try {
-      const id = req.params.id;
-      const result = await Deal.deleteById(id);
-
-      if (result) {
-        res.status(200).json({ status: 'ok', message: 'Successfully deleted' });
-      } else {
-        throw new Error('Deal not found');
-      }
+      const { id } = req.params;
+      await Deal.deleteById(id);
+      res.status(204).end();
     } catch (error) {
       next(error);
     }
@@ -33,8 +23,8 @@ class DealsController {
 
   async getAll(req, res, next) {
     try {
-      const deals = await Deal.getAll();
-      res.status(200).json(deals);
+      const deals = await Deal.find();
+      res.status(200).json({ deals });
     } catch (error) {
       next(error);
     }
