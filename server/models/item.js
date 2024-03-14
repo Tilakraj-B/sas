@@ -4,28 +4,29 @@ const itemSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true 
+      required: true,
     },
     pricePerItem: {
       type: Number,
-      required: true
+      required: true,
     },
     category: {
       type: String,
-      enum: ["Cat1", "Cat2"],
-      required: true
+      enum: ["Cat1", "Cat2", "others"],
+      required: true,
+      default: "others",
     },
     imageUrl: {
       type: String,
-      require: true
+      require: true,
     },
     quantity: {
       type: Number,
-      required: true
+      required: true,
     },
   },
   {
-  timestamps: true
+    timestamps: true,
   }
 );
 

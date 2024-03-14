@@ -1,7 +1,8 @@
 const { BadRequestError, UnauthorizedError } = require("../middlewares/errors");
-const User = require("../models/user");
+const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../utils/jwt");
+const { comparePassword, hashPassword } = require("../utils/password");
 
 class AuthController {
   async login(req, res, next) {
@@ -14,7 +15,10 @@ class AuthController {
       const user = await User.findOne({ email });
       if (!user) throw new UnauthorizedError("Invalid email");
 
-      const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+      const isPasswordValid = await comparePassword(
+        password,
+        user.passwordHash
+      );
       if (!isPasswordValid) throw new UnauthorizedError("Invalid password");
 
       const payload = { id: user._id, role: user.role };
@@ -49,7 +53,7 @@ class AuthController {
 
       if (user) throw new BadRequestError("Email already exists");
 
-      const passwordHash = await bcrypt.hash(password, 10);
+      const passwordHash = await hashPassword(password);
 
       const newUser = await User.create({
         name,
