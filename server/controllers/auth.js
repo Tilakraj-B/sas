@@ -1,6 +1,5 @@
 const { BadRequestError, UnauthorizedError } = require("../middlewares/errors");
 const User = require("../models/User");
-const bcrypt = require("bcrypt");
 const { generateToken } = require("../utils/jwt");
 const { comparePassword, hashPassword } = require("../utils/password");
 
