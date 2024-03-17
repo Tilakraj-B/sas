@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import AuthRoutes from "./AuthRoutes";
 import NotFound from "../pages/errors/NotFound";
 import ClerkRoutes from "./ClerkRoutes";
@@ -10,6 +10,10 @@ const AppRoutes = () => {
   return (
     <>
       <Routes>
+        <Route
+          path="/"
+          element={<Navigate to="/clerk/home" replace={true} />}
+        />
         <Route path="/auth/*" element={<AuthRoutes />} />
         <Route path="/clerk/*" element={<ClerkRoutes />} />
         <Route path="/manager/*" element={<ManagerRoutes />} />

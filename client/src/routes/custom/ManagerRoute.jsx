@@ -8,7 +8,9 @@ const ManagerRoute = () => {
   const role = useSelector(selectRole);
 
   if (!user) {
-    return <Navigate to="/auth/login" />;
+    return (
+      <Navigate to="/auth/login" state={{ from: window.location.pathname }} />
+    );
   }
 
   if (role !== "manager") {

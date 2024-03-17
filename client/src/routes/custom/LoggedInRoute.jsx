@@ -7,7 +7,9 @@ const LoggedInRoute = () => {
   const user = useSelector(selectUser);
 
   if (!user) {
-    return <Navigate to="/auth/login" />;
+    return (
+      <Navigate to="/auth/login" state={{ from: window.location.pathname }} />
+    );
   }
 
   return <Outlet />;

@@ -1,0 +1,4 @@
+.content {
+  margin-left: var(--width-sidebar);
+  background-color: var(--color-base-400);
+}
