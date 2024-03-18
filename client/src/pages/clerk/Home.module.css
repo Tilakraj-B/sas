@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+}
+
+.left {
+  flex: 1;
+  height: 100dvh;
+  overflow: hidden;
+
+  background-color: var(--color-base-500);
+}
+
+.right {
+  width: 100%;
+  max-width: 400px;
+}

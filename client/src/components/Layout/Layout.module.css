@@ -1,3 +1,9 @@
+.container {
+  height: 100dvh;
+  width: 100dvw;
+  overflow: hidden;
+}
+
 .content {
   margin-left: var(--width-sidebar);
   background-color: var(--color-base-400);
