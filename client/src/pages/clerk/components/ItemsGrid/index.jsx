@@ -8,7 +8,7 @@ const ItemsGrid = () => {
   return (
     <div className={styles.items}>
       {items.map((item, index) => (
-        <ItemCard key={index} item={item} />
+        <ItemCard key={item._id} item={item} />
       ))}
     </div>
   );

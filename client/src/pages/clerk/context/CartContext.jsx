@@ -8,6 +8,7 @@ const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
   const addToCart = (item) => {
+    console.log("adding to cart", item);
     const itemInCart = cart.find((i) => i._id === item._id);
     if (itemInCart) {
       itemInCart.quantity++;
@@ -18,6 +19,7 @@ const CartProvider = ({ children }) => {
   };
 
   const increaseQuantity = (item) => {
+    console.log("increasing quantity", item);
     const itemInCart = cart.find((i) => i._id === item._id);
     if (itemInCart) {
       itemInCart.quantity++;
@@ -26,6 +28,7 @@ const CartProvider = ({ children }) => {
   };
 
   const decreaseQuantity = (item) => {
+    console.log("decreasing quantity", item);
     const itemInCart = cart.find((i) => i._id === item._id);
     if (itemInCart) {
       itemInCart.quantity--;
@@ -38,6 +41,7 @@ const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (item) => {
+    console.log("removing from cart", item);
     setCart(cart.filter((i) => i._id !== item._id));
   };
 

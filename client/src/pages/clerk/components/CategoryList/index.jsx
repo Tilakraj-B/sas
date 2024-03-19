@@ -9,7 +9,7 @@ const CategoryList = () => {
     <div className={styles.categories}>
       {categories.map((category, index) => (
         <div
-          key={index}
+          key={category.label}
           className={
             styles.category + (category.active ? " " + styles.active : "")
           }

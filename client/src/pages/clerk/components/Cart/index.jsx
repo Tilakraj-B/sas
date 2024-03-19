@@ -13,7 +13,7 @@ const Cart = () => {
       </h2>
       <div className={styles.items}>
         {items.length > 0 ? (
-          items.map((item, index) => <CartItemRow key={index} item={item} />)
+          items.map((item, index) => <CartItemRow key={item._id} item={item} />)
         ) : (
           <div className={styles.empty}>Cart is empty</div>
         )}

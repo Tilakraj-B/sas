@@ -13,7 +13,7 @@ const Sidebar = () => {
         .filter((item) => item.show)
         .map((item, index) => (
           <Link
-            key={index}
+            key={`${index}-${item.label}`}
             className={styles.item + (item.active ? ` ${styles.active}` : "")}
             to={item.path}
           >
