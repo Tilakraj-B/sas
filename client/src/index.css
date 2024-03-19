@@ -19,6 +19,7 @@ code {
 }
 
 :root {
+  --color-primary-200: hsl(345, 100%, 87%);
   --color-primary-300: hsl(345, 100%, 77%);
   --color-primary-400: hsl(345, 100%, 57%);
   --color-primary-500: hsl(345, 100%, 47%);
@@ -35,6 +36,8 @@ code {
   --color-text-300: hsl(0, 0%, 30%);
   --color-text-400: hsl(0, 0%, 10%);
   --color-border-light: hsl(0, 0%, 90%);
+
+  --color-error-400: hsl(348, 100%, 60%);
 
   --width-sidebar: 100px;
 

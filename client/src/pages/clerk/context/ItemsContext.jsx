@@ -14,6 +14,7 @@ export const useItems = () => useContext(ItemsContext);
 
 const allItems = [
   {
+    _id: "1",
     name: "iPhone 9",
     pricePerItem: 549,
     category: "Electronics",
@@ -21,6 +22,7 @@ const allItems = [
     quantity: 94,
   },
   {
+    _id: "2",
     name: "iPhone X",
     pricePerItem: 899,
     category: "Electronics",
@@ -28,6 +30,7 @@ const allItems = [
     quantity: 34,
   },
   {
+    _id: "3",
     name: "Samsung Universe 9",
     pricePerItem: 1249,
     category: "Electronics",
@@ -35,6 +38,7 @@ const allItems = [
     quantity: 36,
   },
   {
+    _id: "4",
     name: "OPPOF19",
     pricePerItem: 280,
     category: "Electronics",
@@ -42,6 +46,7 @@ const allItems = [
     quantity: 123,
   },
   {
+    _id: "5",
     name: "Huawei P30",
     pricePerItem: 499,
     category: "Electronics",
@@ -49,6 +54,7 @@ const allItems = [
     quantity: 32,
   },
   {
+    _id: "6",
     name: "MacBook Pro",
     pricePerItem: 1749,
     category: "Electronics",
@@ -56,6 +62,7 @@ const allItems = [
     quantity: 83,
   },
   {
+    _id: "7",
     name: "Samsung Galaxy Book",
     pricePerItem: 1499,
     category: "Electronics",
@@ -63,6 +70,7 @@ const allItems = [
     quantity: 50,
   },
   {
+    _id: "8",
     name: "Microsoft Surface Laptop 4",
     pricePerItem: 1499,
     category: "Electronics",
@@ -70,6 +78,7 @@ const allItems = [
     quantity: 68,
   },
   {
+    _id: "9",
     name: "Infinix INBOOK",
     pricePerItem: 1099,
     category: "Electronics",
@@ -77,6 +86,7 @@ const allItems = [
     quantity: 96,
   },
   {
+    _id: "10",
     name: "HP Pavilion 15-DK1056WM",
     pricePerItem: 1099,
     category: "Electronics",
@@ -84,6 +94,7 @@ const allItems = [
     quantity: 89,
   },
   {
+    _id: "11",
     name: "perfume Oil",
     pricePerItem: 13,
     category: "Beauty & Personal Care",
@@ -91,6 +102,7 @@ const allItems = [
     quantity: 65,
   },
   {
+    _id: "12",
     name: "Brown Perfume",
     pricePerItem: 40,
     category: "Beauty & Personal Care",
@@ -98,6 +110,7 @@ const allItems = [
     quantity: 52,
   },
   {
+    _id: "13",
     name: "Fog Scent Xpressio Perfume",
     pricePerItem: 13,
     category: "Beauty & Personal Care",
@@ -105,6 +118,7 @@ const allItems = [
     quantity: 61,
   },
   {
+    _id: "14",
     name: "Non-Alcoholic Concentrated Perfume Oil",
     pricePerItem: 120,
     category: "Beauty & Personal Care",
@@ -112,6 +126,7 @@ const allItems = [
     quantity: 114,
   },
   {
+    _id: "15",
     name: "Eau De Perfume Spray",
     pricePerItem: 30,
     category: "Beauty & Personal Care",
@@ -119,6 +134,7 @@ const allItems = [
     quantity: 105,
   },
   {
+    _id: "16",
     name: "Hyaluronic Acid Serum",
     pricePerItem: 19,
     category: "Beauty & Personal Care",
@@ -126,6 +142,7 @@ const allItems = [
     quantity: 110,
   },
   {
+    _id: "17",
     name: "Tree Oil 30ml",
     pricePerItem: 12,
     category: "Beauty & Personal Care",
@@ -133,6 +150,7 @@ const allItems = [
     quantity: 78,
   },
   {
+    _id: "18",
     name: "Oil Free Moisturizer 100ml",
     pricePerItem: 40,
     category: "Beauty & Personal Care",
@@ -140,6 +158,7 @@ const allItems = [
     quantity: 88,
   },
   {
+    _id: "19",
     name: "Skin Beauty Serum.",
     pricePerItem: 46,
     category: "Beauty & Personal Care",
@@ -147,6 +166,7 @@ const allItems = [
     quantity: 54,
   },
   {
+    _id: "20",
     name: "Freckle Treatment Cream- 15gm",
     pricePerItem: 70,
     category: "Beauty & Personal Care",
@@ -154,6 +174,7 @@ const allItems = [
     quantity: 140,
   },
   {
+    _id: "21",
     name: "- Daal Masoor 500 grams",
     pricePerItem: 20,
     category: "Groceries",
@@ -161,6 +182,7 @@ const allItems = [
     quantity: 133,
   },
   {
+    _id: "22",
     name: "Elbow Macaroni - 400 gm",
     pricePerItem: 14,
     category: "Groceries",
@@ -168,6 +190,7 @@ const allItems = [
     quantity: 146,
   },
   {
+    _id: "23",
     name: "Orange Essence Food Flavou",
     pricePerItem: 14,
     category: "Groceries",
@@ -175,6 +198,7 @@ const allItems = [
     quantity: 26,
   },
   {
+    _id: "24",
     name: "cereals muesli fruit nuts",
     pricePerItem: 46,
     category: "Groceries",
@@ -182,6 +206,7 @@ const allItems = [
     quantity: 113,
   },
   {
+    _id: "25",
     name: "Gulab Powder 50 Gram",
     pricePerItem: 70,
     category: "Groceries",

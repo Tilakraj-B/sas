@@ -14,7 +14,13 @@ const Home = () => {
       <CartProvider>
         <div className={styles.container}>
           <div className={styles.left}>
+            <h2>
+              Items <span>Category</span>
+            </h2>
             <CategoryList />
+            <h2>
+              Choose <span>Order</span>
+            </h2>
             <ItemsGrid />
           </div>
           <div className={styles.right}>

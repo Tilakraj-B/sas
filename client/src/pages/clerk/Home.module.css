@@ -8,9 +8,21 @@
   overflow: hidden;
 
   background-color: var(--color-base-500);
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--color-text-400);
+    padding: 0.5rem 1rem;
+    margin: 0;
+
+    span {
+      color: var(--color-text-300);
+      font-weight: 400;
+    }
+  }
 }
 
 .right {
-  width: 100%;
-  max-width: 400px;
+  width: clamp(300px, 30%, 400px);
 }
