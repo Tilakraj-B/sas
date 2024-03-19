@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Cart.module.css";
 import { useCart } from "../../context/CartContext";
 import CartItemRow from "../CartItemTile";
+import DealsInput from "../DealsInput";
 
 const Cart = () => {
   const { items } = useCart();
@@ -18,8 +19,9 @@ const Cart = () => {
           <div className={styles.empty}>Cart is empty</div>
         )}
       </div>
-      <div className={styles.divider}></div>
       <div className={styles.bottom}>
+        <div className={styles.divider}></div>
+        <DealsInput />
         <div className={styles.total}>
           <span>Sub Total</span>
           <span>

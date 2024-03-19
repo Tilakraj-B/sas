@@ -16,6 +16,10 @@ const dealSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
   startTimestamp: {
     type: Date,
     required: true,

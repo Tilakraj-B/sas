@@ -23,7 +23,10 @@ class DealsController {
 
   async getAll(req, res, next) {
     try {
-      const deals = await Deal.find();
+      const deals = await Deal.find({
+        startTimestamp: { $lte: new Date() },
+        endTimestamp: { $gte: new Date() },
+      });
       res.status(200).json({ deals });
     } catch (error) {
       next(error);

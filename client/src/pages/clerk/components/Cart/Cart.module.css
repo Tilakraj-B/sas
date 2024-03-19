@@ -32,14 +32,6 @@
   margin: 2rem 0;
 }
 
-.divider {
-  margin: 1rem auto;
-  width: 90%;
-  height: 0.2rem;
-  border-radius: 0.1rem;
-  background-color: var(--color-base-600);
-}
-
 .bottom {
   position: sticky;
   bottom: 0;
@@ -48,6 +40,14 @@
   gap: 1rem;
   padding: 1rem;
   background-color: var(--color-base-400);
+
+  .divider {
+    margin: 0.5rem auto;
+    width: 90%;
+    height: 0.15rem;
+    border-radius: 0.1rem;
+    background-color: var(--color-base-600);
+  }
 
   .total {
     display: flex;
