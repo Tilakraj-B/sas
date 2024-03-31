@@ -7,6 +7,7 @@ import { IoLogOutOutline } from "react-icons/io5";
 
 const Sidebar = () => {
   const { items } = useSidebar();
+  console.log(items)
   return (
     <div className={styles.sidebar}>
       {items

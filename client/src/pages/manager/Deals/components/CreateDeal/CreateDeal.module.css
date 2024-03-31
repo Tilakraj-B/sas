@@ -1,0 +1,59 @@
+/* CreateDeal.module.css */
+
+.formContainer {
+    width: 90%; /* Adjusted width for responsiveness */
+    max-width: 420px; /* Maximum width for larger screens */
+    height: 500px; /* Let the height adjust according to content */
+    margin: auto;
+    margin-top: 10px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Background color for the container */
+  }
+  
+  .form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .input,
+  .select {
+    width: 100%; /* Adjusted width for responsiveness */
+    max-width: 300px; /* Maximum width for larger screens */
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input:focus,
+  .select:focus {
+    border-color: #007bff; /* Border color on focus */
+  }
+  
+  .button {
+    margin-top: 20px;
+    width: 100%; /* Adjusted width for responsiveness */
+    max-width: 300px; /* Maximum width for larger screens */
+    padding: 10px;
+    background-color: var(--color-primary-400);
+    box-shadow: var(--shadow-light);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  

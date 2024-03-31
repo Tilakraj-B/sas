@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  margin-bottom: auto; /* Pushes it to the top */
+}
+
+.bottom {
+  margin-top: auto; /* Pushes it to the bottom */
+}
