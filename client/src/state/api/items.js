@@ -28,6 +28,7 @@ const itemsApi = api.injectEndpoints({
 export const {
   useGetItemsQuery,
   useCreateItemMutation,
+  useUpdateItemMutation,
   useDeleteItemMutation,
 } = itemsApi;
 

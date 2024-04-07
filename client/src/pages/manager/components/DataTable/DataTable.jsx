@@ -14,7 +14,7 @@ const DataTable = ({
   columns = [],
   title = "Data Table",
   data,
-  getRowId = (row) => row._id,
+  getRowId = (row) => row,
   actions,
   selectedColumns: initialSelectedColumns,
 }) => {
@@ -249,8 +249,18 @@ const DataTableFooter = () => {
 };
 
 const DataTableRow = ({ children, id }) => {
-  const { isRowSelected, toggleSelectRow, isHighlighted, actions } =
-    useDataTable();
+  const {
+    isRowSelected,
+    toggleSelectRow,
+    isHighlighted,
+    actions,
+    data,
+    getRowId,
+  } = useDataTable();
+  const handleActionClick = (action, itemId) => {
+    const item = getRowId(data.find((item) => getRowId(item)._id === itemId));
+    action(item);
+  };
   return (
     <tr
       className={
@@ -272,7 +282,6 @@ const DataTableRow = ({ children, id }) => {
         <td className={styles.rowActions}>
           <Dropdown button={<FiMoreHorizontal size={18} />}>
             <ul>
-              <li className={styles.rowActionsHeader}>Actions</li>
               {actions.delete && (
                 <li
                   className={styles.delete}
@@ -295,7 +304,10 @@ const DataTableRow = ({ children, id }) => {
                     );
                   if (typeof actions[key] === "function")
                     return (
-                      <li key={key} onClick={() => actions[key](id)}>
+                      <li
+                        key={key}
+                        onClick={() => handleActionClick(actions.edit, id._id)}
+                      >
                         {key}
                       </li>
                     );

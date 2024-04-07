@@ -1,11 +1,25 @@
 import DataTable from "../../../components/DataTable/DataTable";
 import { useItems } from "../../context/ItemsContext";
-import ItemRow from "../ItemRow";
-import styles from "./ItemTable.module.css";
+import { useSideBar } from "../../context/SideBarContext";
 import Card from "../../../components/Card/Card";
 
 const ItemTable = () => {
   const { items } = useItems();
+  const { viewItemDetails, selectItem, handleDelete } = useSideBar();
+
+  const actions = {
+    edit: {
+      label: "View",
+      action: async (item) => {
+        await selectItem({ item: item });
+        viewItemDetails();
+      },
+    },
+    delete: (id) => {
+      handleDelete(id);
+      console.log(`Deleting row with id ${id}`);
+    },
+  };
 
   return (
     <Card>
@@ -17,6 +31,7 @@ const ItemTable = () => {
           { key: "quantity", label: "Quantity" },
         ]}
         data={items}
+        actions={actions}
       />
     </Card>
   );

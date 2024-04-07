@@ -262,23 +262,14 @@ const ItemsProvider = ({children}) => {
     setSelectedCategory(category.label);
   };
 
-  const [searchItem, setSearchItem] = useState("");
-
-  const changSearchItem = (value) => {
-    setSearchItem(value);
-  }
 
   const value = {
-    // items: selectedCategory === categories[0]
-    //         ? items.filter((item) => item.name.includes(searchItem))
-    //         : items.filter((item) => item.name.includes(searchItem) && item.category === selectedCategory.label),
     items: items,
     categories : categories.map((category) => ({
         ...category,
         active: category.label === selectedCategory,
     })),
     changeCategory,
-    changSearchItem,
   };
 
   return (
