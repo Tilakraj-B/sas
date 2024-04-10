@@ -1,16 +1,67 @@
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
+import { useGetDealsQuery } from "../../../../state/api/deals";
 import { useGetItemsQuery } from "../../../../state/api/items";
 
-import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
-import { PiDress, PiBooks } from "react-icons/pi";
-import { TbGardenCart } from "react-icons/tb";
-import { IoCarSportOutline } from "react-icons/io5";
-import { MdOutlineSmartToy, MdOutlineSportsBasketball } from "react-icons/md";
-import { CgGirl } from "react-icons/cg";
+const DealsContext = createContext();
 
-const ItemsContext = createContext();
+export const useDeals = () => useContext(DealsContext);
 
-export const useItems = () => useContext(ItemsContext);
+const allDeals = [
+  {
+    _id: "1",
+    name: "Buy 1 get 1 free",
+    applicableItems: ["1", "2", "3", "4", "5", "6"],
+    type: "fixed",
+    value: 100,
+    startTimestamp: new Date(),
+    endTimestamp: new Date(),
+  },
+  {
+    _id: "2",
+    name: "10% off on 2 items",
+    applicableItems: ["1", "2"],
+    type: "percentage",
+    value: 10,
+    startTimestamp: new Date(),
+    endTimestamp: new Date(),
+  },
+  {
+    _id: "3",
+    name: "5% off on 1 item",
+    applicableItems: ["3"],
+    type: "percentage",
+    value: 5,
+    startTimestamp: new Date(),
+    endTimestamp: new Date(),
+  },
+  {
+    _id: "4",
+    name: "20% off on 3 items",
+    applicableItems: ["1", "2", "3"],
+    type: "percentage",
+    value: 20,
+    startTimestamp: new Date(),
+    endTimestamp: new Date(),
+  },
+  {
+    _id: "5",
+    name: "20% off on 34 items",
+    applicableItems: ["1", "2", "3"],
+    type: "percentage",
+    value: 20,
+    startTimestamp: new Date(),
+    endTimestamp: new Date(),
+  },
+  {
+    _id: "6",
+    name: "20% off on 2 items",
+    applicableItems: ["1", "2", "3"],
+    type: "percentage",
+    value: 20,
+    startTimestamp: new Date(),
+    endTimestamp: new Date(),
+  },
+];
 
 const allItems = [
   {
@@ -215,65 +266,18 @@ const allItems = [
   },
 ];
 
-const ItemsProvider = ({ children }) => {
+const DealsProvider = ({ children }) => {
+  const { deals = allDeals } = useGetDealsQuery();
   const { items = allItems } = useGetItemsQuery();
-  const categories = [
-    {
-      label: "All",
-      icon: <HiOutlineDevicePhoneMobile />,
-    },
-    {
-      label: "Electronics",
-      icon: <HiOutlineDevicePhoneMobile />,
-    },
-    {
-      label: "Clothing",
-      icon: <PiDress />,
-    },
-    {
-      label: "Home & Garden",
-      icon: <TbGardenCart />,
-    },
-    {
-      label: "Automotive",
-      icon: <IoCarSportOutline />,
-    },
-    {
-      label: "Toys & Games",
-      icon: <MdOutlineSmartToy />,
-    },
-    {
-      label: "Books",
-      icon: <PiBooks />,
-    },
-    {
-      label: "Sports & Outdoors",
-      icon: <MdOutlineSportsBasketball />,
-    },
-    {
-      label: "Beauty & Personal Care",
-      icon: <CgGirl />,
-    },
-  ];
-
-  const [selectedCategory, setSelectedCategory] = useState(categories[0].label);
-
-  const changeCategory = (category) => {
-    setSelectedCategory(category.label);
-  };
 
   const value = {
+    deals: deals,
     items: items,
-    categories: categories.map((category) => ({
-      ...category,
-      active: category.label === selectedCategory,
-    })),
-    changeCategory,
   };
 
   return (
-    <ItemsContext.Provider value={value}>{children}</ItemsContext.Provider>
+    <DealsContext.Provider value={value}>{children}</DealsContext.Provider>
   );
 };
 
-export default ItemsProvider;
+export default DealsProvider;

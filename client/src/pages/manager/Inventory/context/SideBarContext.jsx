@@ -103,9 +103,9 @@ const SideBarProvider = ({ children }) => {
     e.target.reset();
   };
 
-  const handleDelete = () => {
+  const handleDelete = (item) => {
     console.log("deleting item");
-    // deleteItem(selectItem._id);
+    // deleteItem(item._id);
   };
 
   const value = {
