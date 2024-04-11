@@ -1,11 +1,11 @@
 import Card from "../../../components/Card/Card";
 import DataTable from "../../../components/DataTable/DataTable";
 import { useUsers } from "../../context/UsersContext";
-import { useSideBar } from "../../context/NewUserContext";
+import { useNewUser } from "../../context/NewUserContext";
 
 const UsersTable = () => {
   const { users } = useUsers();
-  const { handleSubmit, handleDelete } = useSideBar();
+  const { handleDelete } = useNewUser();
 
   const actions = {
     delete: (user) => {

@@ -1,13 +1,13 @@
 import React from "react";
 import styles from "./Users.module.css";
 import UsersProvider from "./context/UsersContext";
-import SideBarProvider from "./context/NewUserContext";
 import UsersTable from "./components/UsersTable";
 import NewUser from "./components/NewUser";
+import NewUserProvider from "./context/NewUserContext";
 const Users = () => {
   return (
     <UsersProvider>
-      <SideBarProvider>
+      <NewUserProvider>
         <div className={styles.container}>
           <div className={styles.left}>
             <UsersTable />
@@ -16,7 +16,7 @@ const Users = () => {
             <NewUser />
           </div>
         </div>
-      </SideBarProvider>
+      </NewUserProvider>
     </UsersProvider>
   );
 };

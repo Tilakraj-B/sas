@@ -3,11 +3,11 @@ import {
   useCreateClerkMutation,
   useDeleteUserMutation,
 } from "../../../../state/api/users";
-const SideBarContext = createContext();
+const NewUserContext = createContext();
 
-export const useSideBar = () => useContext(SideBarContext);
+export const useNewUser = () => useContext(NewUserContext);
 
-const SideBarProvider = ({ children }) => {
+const NewUserProvider = ({ children }) => {
   const [createClerk] = useCreateClerkMutation();
   const [deleteUser] = useDeleteUserMutation();
 
@@ -37,8 +37,8 @@ const SideBarProvider = ({ children }) => {
   };
 
   return (
-    <SideBarContext.Provider value={value}>{children}</SideBarContext.Provider>
+    <NewUserContext.Provider value={value}>{children}</NewUserContext.Provider>
   );
 };
 
-export default SideBarProvider;
+export default NewUserProvider;
