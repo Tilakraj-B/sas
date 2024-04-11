@@ -1,0 +1,27 @@
+.wrapper {
+  position: relative;
+
+  --color-white: var(--color-base-400);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 1rem);
+  right: 0;
+  z-index: 100;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.3rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 0.4rem;
+  box-shadow: var(--shadow-light);
+}
+
+.button {
+  cursor: pointer;
+}
+
+.wrapper.hide .dropdown {
+  display: none;
+}

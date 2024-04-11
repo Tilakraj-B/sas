@@ -1,23 +1,23 @@
 import React from "react";
-import AllDealProvider from "./context/AllDealContext";
-import CreateDeal from "./components/CreateDeal";
-import AllDeal from "./components/AllDeal";
+import DealsProvider from "./context/DealsContext";
+import DealsTable from "./components/DealsTable";
 import styles from "./Deals.module.css";
-
+import SideBar from "./components/Sidebar";
+import SideBarProvider from "./context/SideBarContext";
 const Deals = () => {
   return (
-    <AllDealProvider>
-      <div>
-        <div >
-          <h1>Create Deal</h1>
-          <CreateDeal />
+    <DealsProvider>
+      <SideBarProvider>
+        <div className={styles.container}>
+          <div className={styles.left}>
+            <DealsTable />
+          </div>
+          <div className={styles.right}>
+            <SideBar />
+          </div>
         </div>
-        <div >
-          <h1>All Deals</h1>
-          <AllDeal />
-        </div>
-      </div>
-    </AllDealProvider>
+      </SideBarProvider>
+    </DealsProvider>
   );
 };
 

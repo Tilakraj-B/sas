@@ -1,12 +1,29 @@
 .container {
-  display: flex;
-  flex-direction: column;
+    display: flex;
 }
 
-.top {
-  margin-bottom: auto; /* Pushes it to the top */
+.left {
+    flex: 1;
+    height: 100dvh;
+    overflow: hidden;
+
+    background-color: var(--color-base-500);
+
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: var(--color-text-400);
+        padding: 0.5rem 1rem;
+        margin: 0;
+
+        span {
+            color: var(--color-text-300);
+            font-weight: 400;
+        }
+    }
 }
 
-.bottom {
-  margin-top: auto; /* Pushes it to the bottom */
+.right {
+    width: clamp(300px, 30%, 400px);
 }
+
