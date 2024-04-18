@@ -5,7 +5,7 @@ const { generateRandomPassword, hashPassword } = require("../utils/password");
 class UsersController {
   async createClerk(req, res, next) {
     try {
-      const { email, name } = req.body;
+      const { email, name } = req.body?.clerk;
 
       if (!email) throw new BadRequestError("Email is required");
       if (!name) throw new BadRequestError("Name is required");

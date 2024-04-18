@@ -8,6 +8,7 @@
   box-shadow: var(--shadow-line);
   transition: all 0.3s ease;
   cursor: pointer;
+  max-height: 220px;
   background-color: var(--color-base-400);
 
   .image {

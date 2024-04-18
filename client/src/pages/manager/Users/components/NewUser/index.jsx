@@ -5,7 +5,7 @@ const NewUser = () => {
   const { handleSubmit } = useNewUser();
   return (
     <div className={styles.sidebar}>
-      <h2>{"Add User"}</h2>
+      <h2>Add Clerk</h2>
       <form
         action="/submit"
         method="post"

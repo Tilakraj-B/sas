@@ -14,8 +14,11 @@ class DealsController {
   async deleteById(req, res, next) {
     try {
       const { id } = req.params;
-      await Deal.deleteById(id);
-      res.status(204).end();
+
+      if (!id) throw new BadRequestError("id is required");
+
+      const deletedDeal = await Deal.findByIdAndDelete(id);
+      res.status(200).json({ deal: deletedDeal });
     } catch (error) {
       next(error);
     }
@@ -25,6 +28,18 @@ class DealsController {
     try {
       const deals = await Deal.find({});
       res.status(200).json({ deals });
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getById(req, res, next) {
+    try {
+      const { id } = req.params;
+
+      if (!id) throw new BadRequestError("id is required");
+
+      const deal = await Deal.findById(id);
+      res.status(200).json({ deal });
     } catch (error) {
       next(error);
     }

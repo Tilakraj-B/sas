@@ -212,23 +212,21 @@ const allItems = [
 
 const SideBarProvider = ({ children }) => {
   const [isAddingNewDeal, setIsAddingNewDeal] = useState(true);
-
   const [createDeal] = useCreateDealMutation();
   const [deleteDeal] = useDeleteDealMutation();
-
   const [viewDeal, setViewDeal] = useState(false);
-  const [selectedDeal, setSelectedDeal] = useState(null);
+  const [selectedDealId, setSelectedDealId] = useState(null);
 
   const { items = allItems } = useGetItemsQuery();
-
 
   const addNewDeal = () => {
     setViewDeal(false);
     setIsAddingNewDeal(true);
   };
 
-  const viewDealDetails = () => {
+  const viewDealDetails = (dealId) => {
     setIsAddingNewDeal(false);
+    setSelectedDealId(dealId);
     setViewDeal(true);
     setNewDeal({
       applicableItems: [],
@@ -236,10 +234,6 @@ const SideBarProvider = ({ children }) => {
       value: null,
       name: "",
     });
-  };
-
-  const selectDeal = ({ deal }) => {
-    setSelectedDeal(deal);
   };
 
   const [newDeal, setNewDeal] = useState({
@@ -291,20 +285,19 @@ const SideBarProvider = ({ children }) => {
     );
   };
 
-  const handleDelete = (deal) => {
-    console.log(deal._id);
-    deleteDeal(deal._id);
+  const handleDelete = (dealId) => {
+    console.log(dealId);
+    deleteDeal(dealId);
   };
 
   const value = {
     isAddingNewDeal,
     viewDeal,
-    selectedDeal,
     newDeal,
     applicableItemsList,
+    selectedDealId,
     addNewDeal,
     viewDealDetails,
-    selectDeal,
     handleSubmit,
     handleDelete,
     addApplicableItem,

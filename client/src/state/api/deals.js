@@ -4,6 +4,7 @@ const dealsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getDeals: builder.query({
       query: () => "/deals",
+      providesTags:["Deal"]
     }),
     createDeal: builder.mutation({
       query: (deal) => ({
@@ -11,17 +12,24 @@ const dealsApi = api.injectEndpoints({
         method: "POST",
         body: { deal },
       }),
+      invalidatesTags: ["Deal"],
+    }),
+    getDeal: builder.query({
+      query: (id) => `/deals/${id}`,
+      invalidatesTags: ["Deal"],
     }),
     deleteDeal: builder.mutation({
       query: (id) => ({
         url: `/deals/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Deal"],
     }),
   }),
 });
 
 export const {
+  useGetDealQuery,
   useGetDealsQuery,
   useCreateDealMutation,
   useDeleteDealMutation,

@@ -5,6 +5,7 @@ const DealsController = require("../controllers/deals");
 const { requireRole } = require("../middlewares/auth");
 
 router.get("/", DealsController.getAll);
+router.get("/:id", DealsController.getById);
 router.post("/", requireRole("manager"), DealsController.create);
 router.delete("/:id", requireRole("manager"), DealsController.deleteById);
 

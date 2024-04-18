@@ -5,19 +5,18 @@ import { useSideBar } from "../../context/SideBarContext";
 
 const DealsTable = () => {
   const { deals } = useDeals();
-  const { viewDealDetails, selectDeal, handleDelete } = useSideBar();
+  const { viewDealDetails, handleDelete } = useSideBar();
 
   const actions = {
-    edit: {
+    view: {
       label: "View",
-      action: async (deal) => {
-        await selectDeal({ deal: deal });
-        viewDealDetails();
+      action: (dealId) => {
+        viewDealDetails(dealId);
       },
     },
-    delete: (item) => {
-      handleDelete(item);
-      console.log(`Deleting row with id ${item._id}`);
+    delete: (dealId) => {
+      handleDelete(dealId);
+      console.log(`Deleting row with id ${dealId}`);
     },
   };
 

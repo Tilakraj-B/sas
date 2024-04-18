@@ -15,9 +15,9 @@ const ItemTable = () => {
         console.log(`Viewing row with id ${itemId}`);
       },
     },
-    delete: (item) => {
-      handleDelete(item);
-      console.log(`Deleting row with id ${item._id}`);
+    delete: (itemId) => {
+      handleDelete(itemId);
+      console.log(`Deleting row with id ${itemId}`);
     },
   };
 

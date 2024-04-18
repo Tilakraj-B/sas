@@ -1,10 +1,11 @@
 import styles from "./ItemDetails.module.css";
 import { useSideBar } from "../../context/SideBarContext.jsx";
 import { useGetItemQuery } from "../../../../../state/api/items.js";
+import { IoChevronBackOutline } from "react-icons/io5";
 const ItemDetail = () => {
   const { addNewItem, editItem, selectedItemId } = useSideBar();
   const {
-    data: item,
+    data: { item } = {},
     isLoading,
     isError,
     error,
@@ -12,9 +13,11 @@ const ItemDetail = () => {
 
   return (
     <div className={styles.sidebar}>
-      <button className={styles.button} onClick={addNewItem}>
-        Add New Item
-      </button>
+      <div className={styles.back} onClick={addNewItem}>
+        <IoChevronBackOutline />
+        Back
+      </div>
+      
       {isLoading ? (
         <div>Loading...</div>
       ) : item ? (

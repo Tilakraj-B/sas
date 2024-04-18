@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import {
   useCreateItemMutation,
+  useDeleteItemMutation,
   useUpdateItemMutation,
 } from "../../../../state/api/items";
 const SideBarContext = createContext();
@@ -12,6 +13,7 @@ const SideBarProvider = ({ children }) => {
 
   const [createItem] = useCreateItemMutation();
   const [updateItem] = useUpdateItemMutation();
+  const [deleteItem] = useDeleteItemMutation();
   const [selectedItemId, setSelectedItemId] = useState(null);
 
   const addNewItem = () => {
@@ -66,28 +68,13 @@ const SideBarProvider = ({ children }) => {
     quantity: 0,
   });
 
-  const updateImageUrl = (e) => {
-    console.log(e.target.files[0]);
-    const imageUrl = URL.createObjectURL(e.target.files[0]);
-    console.log(imageUrl);
-    if (isEditingItem) {
-      setSelectedItem((item) => ({
-        ...item,
-        imageUrl: imageUrl,
-      }));
-    }
-    setNewItem((prevItem) => ({
-      ...prevItem,
-      imageUrl: imageUrl,
-    }));
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
     // Gather all form inputs
     const formData = new FormData(e.target);
     const newItemData = {
       name: formData.get("name") || "",
-      imageUrl: newItem.imageUrl || "",
+      imageUrl: formData.get("imageUrl") || "",
       pricePerItem: parseFloat(formData.get("pricePerItem")) || 0,
       category: formData.get("category") || "electronics",
       quantity: parseInt(formData.get("quantity")) || 0,
@@ -106,9 +93,9 @@ const SideBarProvider = ({ children }) => {
     e.target.reset();
   };
 
-  const handleDelete = (item) => {
+  const handleDelete = (itemId) => {
     console.log("deleting item");
-    // deleteItem(item._id);
+    deleteItem(itemId);
   };
 
   const value = {
@@ -121,7 +108,6 @@ const SideBarProvider = ({ children }) => {
     viewItemDetails,
     editItem,
     selectItem,
-    updateImageUrl,
     handleSubmit,
     handleDelete,
     selectedItemId,

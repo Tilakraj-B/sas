@@ -14,7 +14,7 @@ const api = createApi({
   endpoints: (builder) => ({
     // ...endpoints
   }),
-  tagTypes: [],
+  tagTypes: ["User", "Item","Deal"],
 });
 
 export default api;

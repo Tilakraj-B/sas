@@ -6,7 +6,19 @@ import DealsInput from "../DealsInput";
 import PrimaryButton from "../../../../components/PrimaryButton";
 
 const Cart = () => {
-  const { items, checkout, InvoicePDFButton } = useCart();
+  const { items, checkout, InvoicePDFButton, deals, selectedDealId } =
+    useCart();
+
+  const calculateDiscoutValue = () => {
+    if (!selectedDealId) return 0;
+    const deal = deals.find((d) => d._id === selectedDealId);
+    const total = items.reduce(
+      (total, item) => total + item.pricePerItem * item.quantity,
+      0
+    );
+    if (deal.type === "percentage") return total * deal.value;
+    else return deal.value;
+  };
 
   return (
     <div className={styles.sidebar}>
@@ -35,7 +47,7 @@ const Cart = () => {
         </div>
         <div className={styles.total}>
           <span>Discount</span>
-          <span>₹0</span>
+          <span>₹{calculateDiscoutValue()}</span>
         </div>
         <div className={styles.total}>
           <span>Total</span>
@@ -44,7 +56,7 @@ const Cart = () => {
             {items.reduce(
               (total, item) => total + item.pricePerItem * item.quantity,
               0
-            )}
+            ) - calculateDiscoutValue()}
           </span>
         </div>
         <InvoicePDFButton />
@@ -57,7 +69,7 @@ const Cart = () => {
                 {items.reduce(
                   (total, item) => total + item.pricePerItem * item.quantity,
                   0
-                )}
+                ) - calculateDiscoutValue()}
               </span>
             </>
           }

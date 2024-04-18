@@ -4,6 +4,7 @@ const itemsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getItems: builder.query({
       query: () => "/items",
+      providesTags: ["Item"],
     }),
     createItem: builder.mutation({
       query: (item) => ({
@@ -11,9 +12,11 @@ const itemsApi = api.injectEndpoints({
         method: "POST",
         body: { item },
       }),
+      invalidatesTags: ["Item"],
     }),
     getItem: builder.query({
       query: (id) => `/items/${id}`,
+      providesTags: ["Item"],
     }),
     updateItem: builder.mutation({
       query: (id, item) => ({
@@ -21,6 +24,14 @@ const itemsApi = api.injectEndpoints({
         method: "PUT",
         body: { item },
       }),
+      invalidatesTags: ["Item"],
+    }),
+    deleteItem: builder.mutation({
+      query: (id) => ({
+        url: `/items/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Item"],
     }),
   }),
 });

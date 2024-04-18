@@ -102,22 +102,28 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    border: "1px solid #f2f2f2",
+    padding: "4px 8px",
   },
   tableCol2: {
-    width: "55%",
+    width: "35%",
     display: "flex",
     alignItems: "center",
+    border: "1px solid #f2f2f2",
+    padding: "4px 8px",
   },
   tableCol3: {
-    width: "10%",
+    width: "15%",
     display: "flex",
     alignItems: "center",
+    border: "1px solid #f2f2f2",
+    padding: "4px 8px",
   },
   totalRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end",
-    marginTop: 30,
+    marginTop: 10,
   },
   totalColHeader: {
     width: "80%",
@@ -126,6 +132,7 @@ const styles = StyleSheet.create({
   },
   totalCol: {
     width: "20%",
+    textAlign: "right",
   },
 });
 
@@ -136,22 +143,16 @@ const Invoice = ({ transaction }) => (
       <Text style={styles.title}>Invoice</Text>
       <View style={styles.table}>
         <View style={styles.tableRow}>
-          <Text style={`${styles.tableColHeader} ${styles.tableCol1}`}>#</Text>
-          <Text style={`${styles.tableColHeader} ${styles.tableCol2}`}>
-            Item
-          </Text>
-          <Text style={`${styles.tableColHeader} ${styles.tableCol3}`}>
+          <Text style={[styles.tableColHeader, styles.tableCol1]}>#</Text>
+          <Text style={[styles.tableColHeader, styles.tableCol2]}>Item</Text>
+          <Text style={[styles.tableColHeader, styles.tableCol3]}>
             Quantity
           </Text>
-          <Text style={`${styles.tableColHeader} ${styles.tableCol3}`}>
-            Price
-          </Text>
-          <Text style={`${styles.tableColHeader} ${styles.tableCol3}`}>
+          <Text style={[styles.tableColHeader, styles.tableCol3]}>Price</Text>
+          <Text style={[styles.tableColHeader, styles.tableCol3]}>
             Discount
           </Text>
-          <Text style={`${styles.tableColHeader} ${styles.tableCol3}`}>
-            Total
-          </Text>
+          <Text style={[styles.tableColHeader, styles.tableCol3]}>Total</Text>
         </View>
         {transaction.sales.map((sale, index) => (
           <View style={styles.tableRow} key={sale._id}>
@@ -205,6 +206,7 @@ const CartProvider = ({ children }) => {
 
   const addToCart = (item) => {
     console.log("adding to cart", item);
+    setTransaction(null);
     const itemInCart = cart.find((i) => i._id === item._id);
     if (itemInCart) {
       itemInCart.quantity++;

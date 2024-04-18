@@ -4,6 +4,7 @@ const usersApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: () => "/users",
+      providesTags: ["User"],
     }),
     createClerk: builder.mutation({
       query: (clerk) => ({
@@ -11,12 +12,14 @@ const usersApi = api.injectEndpoints({
         method: "POST",
         body: { clerk },
       }),
+      invalidatesTags: ["User"],
     }),
     deleteUser: builder.mutation({
       query: (id) => ({
         url: `/users/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["User"],
     }),
   }),
 });

@@ -53,6 +53,18 @@ class ItemsController {
       next(error);
     }
   }
+  async deleteById(req, res, next) {
+    try {
+      const { id } = req.params;
+
+      if (!id) throw new BadRequestError("id is required");
+
+      const deletedItem = await Item.findByIdAndDelete(id);
+      res.status(200).json({ item: deletedItem });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new ItemsController();

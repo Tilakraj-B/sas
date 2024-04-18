@@ -3,14 +3,22 @@ import { useSideBar } from "../../context/SideBarContext.jsx";
 import ApplicableItemTile from "../ApplicableItemTile/index.jsx";
 import { useDeals } from "../../context/DealsContext.jsx";
 import { IoChevronBackOutline } from "react-icons/io5";
+import { useGetDealQuery, useGetDealsQuery } from "../../../../../state/api/deals.js";
 
 const DealDetails = () => {
-  const { addNewDeal, selectedDeal, deleteDeal } = useSideBar();
+  const { addNewDeal,selectedDealId, deleteDeal } = useSideBar();
   const { items } = useDeals();
 
   const getItem = (itemId) => {
     return items.find((item) => item._id === itemId);
   };
+
+  const {
+    data: { deal } = {},
+    isLoading,
+    isError,
+    error,
+  } = useGetDealQuery(selectedDealId);
 
   return (
     <div className={styles.sidebar}>
@@ -18,15 +26,15 @@ const DealDetails = () => {
         <IoChevronBackOutline />
         Back
       </div>
-      <h2>{selectedDeal.name}</h2>
+      <h2>{deal?.name}</h2>
       <div className={styles.textInfo}>
-        <p>Deal Type: {selectedDeal.type}</p>
-        <p>Deal Value: {selectedDeal.value}</p>
+        <p>Deal Type: {deal?.type}</p>
+        <p>Deal Value: {deal?.value}</p>
       </div>
 
       <div className={styles.items}>
-        {selectedDeal.applicableItems.length > 0 ? (
-          selectedDeal.applicableItems.map((itemId, index) => (
+        {deal?.applicableItems?.length > 0 ? (
+          deal?.applicableItems?.map((itemId, index) => (
             <ApplicableItemTile key={itemId} item={getItem(itemId)} />
           ))
         ) : (
