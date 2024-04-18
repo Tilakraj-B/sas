@@ -3,7 +3,7 @@ const { UnauthorizedError, ForbiddenError } = require("./errors");
 
 const requireAuth = (req, res, next) => {
   try {
-    const token = req.cookies.token;
+    const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) throw new UnauthorizedError("Unauthorized");
 
@@ -11,7 +11,7 @@ const requireAuth = (req, res, next) => {
     req.user = payload;
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Unauthorized" });
+    next(error);
   }
 };
 

@@ -3,9 +3,10 @@ import styles from "./Cart.module.css";
 import { useCart } from "../../context/CartContext";
 import CartItemRow from "../CartItemTile";
 import DealsInput from "../DealsInput";
+import PrimaryButton from "../../../../components/PrimaryButton";
 
 const Cart = () => {
-  const { items } = useCart();
+  const { items, checkout } = useCart();
 
   return (
     <div className={styles.sidebar}>
@@ -46,16 +47,21 @@ const Cart = () => {
             )}
           </span>
         </div>
-        <button className={styles.checkout}>
-          Charge{" "}
-          <span>
-            ₹
-            {items.reduce(
-              (total, item) => total + item.pricePerItem * item.quantity,
-              0
-            )}
-          </span>
-        </button>
+        <PrimaryButton
+          title={
+            <>
+              Charge{" "}
+              <span>
+                ₹
+                {items.reduce(
+                  (total, item) => total + item.pricePerItem * item.quantity,
+                  0
+                )}
+              </span>
+            </>
+          }
+          onClick={checkout}
+        />
       </div>
     </div>
   );

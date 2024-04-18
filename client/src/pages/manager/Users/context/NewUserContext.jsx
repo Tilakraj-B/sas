@@ -17,10 +17,8 @@ const NewUserProvider = ({ children }) => {
     const newClerkData = {
       name: formData.get("name") || "",
       email: formData.get("email") || 0,
-      role: "Clerk",
+      role: "clerk",
     };
-    console.log("hi");
-    console.log(newClerkData);
     createClerk(newClerkData);
     e.target.reset();
   };

@@ -1,15 +1,68 @@
-import React, { createContext, useContext, useState } from "react";
-import {
-  useCreateDealMutation,
-  useDeleteDealMutation,
-} from "../../../../state/api/deals";
-import { useGetItemsQuery } from "../../../../state/api/items";
-const SideBarContext = createContext();
+require("dotenv").config();
+require("../config/db");
 
-export const useSideBar = () => useContext(SideBarContext);
+const User = require("../models/User");
+const Item = require("../models/item");
+const Deal = require("../models/deal");
+
+const allUsers = [
+  {
+    name: "John Doe",
+    email: "john.doe@example.com",
+    passwordHash: "e723a55c2e66a7756e7e7e8b9e27b6b0",
+    role: "manager",
+  },
+  {
+    name: "Jane Smith",
+    email: "jane.smith@example.com",
+    passwordHash: "f6c8e6e4e614e1a2e5e8e7e6e5e4e3e2e1",
+    role: "clerk",
+  },
+  {
+    name: "Bob Johnson",
+    email: "bob.johnson@example.com",
+    passwordHash: "d6c8e6e4e614e1a2e5e8e7e6e5e4e3e2e1",
+    role: "clerk",
+  },
+  {
+    name: "Alice Williams",
+    email: "alice.williams@example.com",
+    passwordHash: "c6c8e6e4e614e1a2e5e8e7e6e5e4e3e2e1",
+    role: "manager",
+  },
+  {
+    name: "Charlie Brown",
+    email: "charlie.brown@example.com",
+    passwordHash: "b6c8e6e4e614e1a2e5e8e7e6e5e4e3e2e1",
+    role: "manager",
+  },
+  {
+    name: "David Miller",
+    email: "david.miller@example.com",
+    passwordHash: "a6c8e6e4e614e1a2e5e8e7e6e5e4e3e2e1",
+    role: "clerk",
+  },
+];
+
+const seedUsers = async () => {
+  await User.deleteMany({});
+
+  const passwordHash =
+    "$2b$10$kFQBMr9Z9ZDyL.Qm/4Xaf.VG/sI9URMLHHe1.rE69SeNCE07UAMQy"; // password: 12345678
+
+  for (let user of allUsers) {
+    const newUser = new User({
+      ...user,
+      passwordHash,
+    });
+    await newUser.save();
+  }
+
+  console.log("Users were successfully seeded");
+};
+
 const allItems = [
   {
-    _id: "1",
     name: "iPhone 9",
     pricePerItem: 549,
     category: "Electronics",
@@ -17,7 +70,6 @@ const allItems = [
     quantity: 94,
   },
   {
-    _id: "2",
     name: "iPhone X",
     pricePerItem: 899,
     category: "Electronics",
@@ -25,7 +77,6 @@ const allItems = [
     quantity: 34,
   },
   {
-    _id: "3",
     name: "Samsung Universe 9",
     pricePerItem: 1249,
     category: "Electronics",
@@ -33,7 +84,6 @@ const allItems = [
     quantity: 36,
   },
   {
-    _id: "4",
     name: "OPPOF19",
     pricePerItem: 280,
     category: "Electronics",
@@ -41,7 +91,6 @@ const allItems = [
     quantity: 123,
   },
   {
-    _id: "5",
     name: "Huawei P30",
     pricePerItem: 499,
     category: "Electronics",
@@ -49,7 +98,6 @@ const allItems = [
     quantity: 32,
   },
   {
-    _id: "6",
     name: "MacBook Pro",
     pricePerItem: 1749,
     category: "Electronics",
@@ -57,7 +105,6 @@ const allItems = [
     quantity: 83,
   },
   {
-    _id: "7",
     name: "Samsung Galaxy Book",
     pricePerItem: 1499,
     category: "Electronics",
@@ -65,7 +112,6 @@ const allItems = [
     quantity: 50,
   },
   {
-    _id: "8",
     name: "Microsoft Surface Laptop 4",
     pricePerItem: 1499,
     category: "Electronics",
@@ -73,7 +119,6 @@ const allItems = [
     quantity: 68,
   },
   {
-    _id: "9",
     name: "Infinix INBOOK",
     pricePerItem: 1099,
     category: "Electronics",
@@ -81,7 +126,6 @@ const allItems = [
     quantity: 96,
   },
   {
-    _id: "10",
     name: "HP Pavilion 15-DK1056WM",
     pricePerItem: 1099,
     category: "Electronics",
@@ -89,7 +133,6 @@ const allItems = [
     quantity: 89,
   },
   {
-    _id: "11",
     name: "perfume Oil",
     pricePerItem: 13,
     category: "Beauty & Personal Care",
@@ -97,7 +140,6 @@ const allItems = [
     quantity: 65,
   },
   {
-    _id: "12",
     name: "Brown Perfume",
     pricePerItem: 40,
     category: "Beauty & Personal Care",
@@ -105,7 +147,6 @@ const allItems = [
     quantity: 52,
   },
   {
-    _id: "13",
     name: "Fog Scent Xpressio Perfume",
     pricePerItem: 13,
     category: "Beauty & Personal Care",
@@ -113,7 +154,6 @@ const allItems = [
     quantity: 61,
   },
   {
-    _id: "14",
     name: "Non-Alcoholic Concentrated Perfume Oil",
     pricePerItem: 120,
     category: "Beauty & Personal Care",
@@ -121,7 +161,6 @@ const allItems = [
     quantity: 114,
   },
   {
-    _id: "15",
     name: "Eau De Perfume Spray",
     pricePerItem: 30,
     category: "Beauty & Personal Care",
@@ -129,7 +168,6 @@ const allItems = [
     quantity: 105,
   },
   {
-    _id: "16",
     name: "Hyaluronic Acid Serum",
     pricePerItem: 19,
     category: "Beauty & Personal Care",
@@ -137,7 +175,6 @@ const allItems = [
     quantity: 110,
   },
   {
-    _id: "17",
     name: "Tree Oil 30ml",
     pricePerItem: 12,
     category: "Beauty & Personal Care",
@@ -145,7 +182,6 @@ const allItems = [
     quantity: 78,
   },
   {
-    _id: "18",
     name: "Oil Free Moisturizer 100ml",
     pricePerItem: 40,
     category: "Beauty & Personal Care",
@@ -153,7 +189,6 @@ const allItems = [
     quantity: 88,
   },
   {
-    _id: "19",
     name: "Skin Beauty Serum.",
     pricePerItem: 46,
     category: "Beauty & Personal Care",
@@ -161,7 +196,6 @@ const allItems = [
     quantity: 54,
   },
   {
-    _id: "20",
     name: "Freckle Treatment Cream- 15gm",
     pricePerItem: 70,
     category: "Beauty & Personal Care",
@@ -169,7 +203,6 @@ const allItems = [
     quantity: 140,
   },
   {
-    _id: "21",
     name: "- Daal Masoor 500 grams",
     pricePerItem: 20,
     category: "Groceries",
@@ -177,7 +210,6 @@ const allItems = [
     quantity: 133,
   },
   {
-    _id: "22",
     name: "Elbow Macaroni - 400 gm",
     pricePerItem: 14,
     category: "Groceries",
@@ -185,7 +217,6 @@ const allItems = [
     quantity: 146,
   },
   {
-    _id: "23",
     name: "Orange Essence Food Flavou",
     pricePerItem: 14,
     category: "Groceries",
@@ -193,7 +224,6 @@ const allItems = [
     quantity: 26,
   },
   {
-    _id: "24",
     name: "cereals muesli fruit nuts",
     pricePerItem: 46,
     category: "Groceries",
@@ -201,7 +231,6 @@ const allItems = [
     quantity: 113,
   },
   {
-    _id: "25",
     name: "Gulab Powder 50 Gram",
     pricePerItem: 70,
     category: "Groceries",
@@ -210,110 +239,100 @@ const allItems = [
   },
 ];
 
-const SideBarProvider = ({ children }) => {
-  const [isAddingNewDeal, setIsAddingNewDeal] = useState(true);
+const seedItems = async () => {
+  await Item.deleteMany({});
 
-  const [createDeal] = useCreateDealMutation();
-  const [deleteDeal] = useDeleteDealMutation();
+  for (let item of allItems) {
+    const newItem = new Item(item);
+    await newItem.save();
+  }
 
-  const [viewDeal, setViewDeal] = useState(false);
-  const [selectedDeal, setSelectedDeal] = useState(null);
-
-  const { items = allItems } = useGetItemsQuery();
-
-
-  const addNewDeal = () => {
-    setViewDeal(false);
-    setIsAddingNewDeal(true);
-  };
-
-  const viewDealDetails = () => {
-    setIsAddingNewDeal(false);
-    setViewDeal(true);
-    setNewDeal({
-      applicableItems: [],
-      type: "fixed",
-      value: null,
-      name: "",
-    });
-  };
-
-  const selectDeal = ({ deal }) => {
-    setSelectedDeal(deal);
-  };
-
-  const [newDeal, setNewDeal] = useState({
-    applicableItems: [],
-    type: "fixed",
-    value: null,
-    name: "",
-  });
-
-  const [applicableItemsList, setApplicableItemsList] = useState([]);
-
-  const addApplicableItem = (e) => {
-    const item = items.find((item) => item.name === e.target.value);
-    var applicableItemsId = newDeal.applicableItems;
-    if (applicableItemsId.find((id) => id === item._id)) {
-      e.target.value = "";
-      return;
-    }
-    applicableItemsId.push(item._id);
-    setNewDeal((deal) => ({
-      ...deal,
-      applicableItems: applicableItemsId,
-    }));
-    e.target.value = "";
-    console.log(newDeal);
-    setApplicableItemsList((prev) => [...prev, item]);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const newDealData = {
-      name: formData.get("name") || "",
-      applicableItems: newDeal.applicableItems,
-      value: formData.get("value") || 0,
-      type: formData.get("type") || "fixed",
-    };
-    createDeal(newDealData);
-    e.target.reset();
-  };
-
-  const removeFromApplicableItem = (itemId) => {
-    setNewDeal((deal) => ({
-      ...deal,
-      applicableItems: newDeal.applicableItems.filter((id) => id !== itemId),
-    }));
-    setApplicableItemsList((prev) =>
-      prev.filter((item) => item._id !== itemId)
-    );
-  };
-
-  const handleDelete = (deal) => {
-    console.log(deal._id);
-    deleteDeal(deal._id);
-  };
-
-  const value = {
-    isAddingNewDeal,
-    viewDeal,
-    selectedDeal,
-    newDeal,
-    applicableItemsList,
-    addNewDeal,
-    viewDealDetails,
-    selectDeal,
-    handleSubmit,
-    handleDelete,
-    addApplicableItem,
-    removeFromApplicableItem,
-  };
-
-  return (
-    <SideBarContext.Provider value={value}>{children}</SideBarContext.Provider>
-  );
+  console.log("Items were successfully seeded");
 };
 
-export default SideBarProvider;
+const allDeals = [
+  {
+    name: "Buy 1 get 1 free",
+    applicableItems: ["1", "2", "3", "4", "5", "6"],
+    type: "fixed",
+    value: 100,
+    startTimestamp: new Date(),
+    endTimestamp: new Date() + 1000 * 60 * 60 * 24 * 7,
+  },
+  {
+    name: "10% off on 2 items",
+    applicableItems: ["1", "2"],
+    type: "percentage",
+    value: 10,
+    startTimestamp: new Date(),
+    endTimestamp: new Date() + 1000 * 60 * 60 * 24 * 7,
+  },
+  {
+    name: "5% off on 1 item",
+    applicableItems: ["3"],
+    type: "percentage",
+    value: 5,
+    startTimestamp: new Date(),
+    endTimestamp: new Date() + 1000 * 60 * 60 * 24 * 7,
+  },
+  {
+    name: "20% off on 3 items",
+    applicableItems: ["1", "2", "3"],
+    type: "percentage",
+    value: 20,
+    startTimestamp: new Date(),
+    endTimestamp: new Date() + 1000 * 60 * 60 * 24 * 7,
+  },
+  {
+    name: "20% off on 34 items",
+    applicableItems: ["1", "2", "3"],
+    type: "percentage",
+    value: 20,
+    startTimestamp: new Date(),
+    endTimestamp: new Date() + 1000 * 60 * 60 * 24 * 7,
+  },
+  {
+    name: "20% off on 2 items",
+    applicableItems: ["1", "2", "3"],
+    type: "percentage",
+    value: 20,
+    startTimestamp: new Date(),
+    endTimestamp: new Date() + 1000 * 60 * 60 * 24 * 7,
+  },
+];
+
+const giveRandomIds = (items) => {
+  const randomItems = items.sort(() => 0.5 - Math.random());
+  return randomItems.slice(0, Math.floor(Math.random() * randomItems.length));
+};
+
+const seedDeals = async () => {
+  await Deal.deleteMany({});
+
+  const items = await Item.find();
+  const itemIds = items.map((item) => item._id);
+
+  for (let deal of allDeals) {
+    const newDeal = new Deal({
+      ...deal,
+      applicableItems: giveRandomIds(itemIds),
+    });
+
+    await newDeal.save();
+  }
+
+  console.log("Deals were successfully seeded");
+};
+
+const main = async () => {
+  console.log("Seeding started");
+
+  await seedUsers();
+  await seedItems();
+  await seedDeals();
+
+  console.log("Seeding was successful");
+  process.exit();
+};
+
+main();

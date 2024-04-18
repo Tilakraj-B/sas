@@ -14,12 +14,20 @@ class TransactionsController {
       const itemIds = cart.items?.map((item) => item._id);
       const items = await Item.find({ _id: { $in: itemIds } });
 
+      if (items.length !== itemIds.length) {
+        throw new BadRequestError("item not found");
+      }
+
+      if (items.length === 0) {
+        throw new BadRequestError("cart is empty");
+      }
+
       // check for stock
       items.forEach((item) => {
         const cartItem = cart.items.find(
-          (cartItem) => cartItem._id === item._id
+          (cartItem) => cartItem._id === item._id.toString()
         );
-        if (item.stock < cartItem.quantity) {
+        if (item.quantity < cartItem.quantity) {
           throw new BadRequestError(`${item.name} is out of stock`);
         }
       });
@@ -27,17 +35,17 @@ class TransactionsController {
       // update stock
       items.forEach(async (item) => {
         const cartItem = cart.items.find(
-          (cartItem) => cartItem._id === item._id
+          (cartItem) => cartItem._id === item._id.toString()
         );
-        item.stock -= cartItem.quantity;
+        item.quantity -= cartItem.quantity;
         await item.save();
       });
 
       const totalPrice = items.reduce((total, item) => {
         const cartItem = cart.items.find(
-          (cartItem) => cartItem._id === item._id
+          (cartItem) => cartItem._id === item._id.toString()
         );
-        return total + item.price * cartItem.quantity;
+        return total + item.pricePerItem * cartItem.quantity;
       }, 0);
 
       // check for applied deals
@@ -68,13 +76,13 @@ class TransactionsController {
       const sales = await Sale.insertMany(
         items.map((item) => {
           const cartItem = cart.items.find(
-            (cartItem) => cartItem._id === item._id
+            (cartItem) => cartItem._id === item._id.toString()
           );
           return {
             item: item._id,
             quantity: cartItem.quantity,
-            price: item.price,
             discount: avgDiscount,
+            totalPrice: item.pricePerItem * cartItem.quantity,
           };
         })
       );

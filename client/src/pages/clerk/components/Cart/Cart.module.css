@@ -63,31 +63,4 @@
       color: var(--color-text-300);
     }
   }
-
-  .checkout {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.8rem;
-    margin-top: 1rem;
-    border-radius: 0.7rem;
-    background-color: var(--color-primary-400);
-    color: var(--color-base-400);
-    font-size: 1rem;
-    font-weight: 500;
-    border: none;
-    box-shadow: var(--shadow-light);
-    cursor: pointer;
-    transition: background-color 0.3s;
-
-    span {
-      color: var(--color-primary-200);
-      font-weight: 400;
-      margin-left: 0.5rem;
-    }
-
-    &:hover {
-      background-color: var(--color-primary-500);
-    }
-  }
 }

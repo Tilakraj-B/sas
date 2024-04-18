@@ -1,5 +1,38 @@
 const mongoose = require("mongoose");
 
+const categories = [
+  {
+    label: "Electronics",
+  },
+  {
+    label: "Clothing",
+  },
+  {
+    label: "Home & Garden",
+  },
+  {
+    label: "Automotive",
+  },
+  {
+    label: "Toys & Games",
+  },
+  {
+    label: "Books",
+  },
+  {
+    label: "Sports & Outdoors",
+  },
+  {
+    label: "Beauty & Personal Care",
+  },
+  {
+    label: "Groceries",
+  },
+  {
+    label: "others",
+  },
+];
+
 const itemSchema = new mongoose.Schema(
   {
     name: {
@@ -12,7 +45,7 @@ const itemSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ["Cat1", "Cat2", "others"],
+      enum: categories.map((category) => category.label),
       required: true,
       default: "others",
     },

@@ -14,7 +14,7 @@ const DataTable = ({
   columns = [],
   title = "Data Table",
   data,
-  getRowId = (row) => row,
+  getRowId = (row) => row._id,
   actions,
   selectedColumns: initialSelectedColumns,
 }) => {
@@ -32,7 +32,7 @@ const DataTable = ({
     pageLimit,
     totalPages,
     changePageLimit: setPageLimit,
-  } = usePagination({ defaultPageLimit: 10, data: searchResultRows });
+  } = usePagination({ defaultPageLimit: 8, data: searchResultRows });
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const [selectedColumns, setSelectedColumns] = useState(
     initialSelectedColumns || columns.map(({ key }) => key)
@@ -259,7 +259,7 @@ const DataTableRow = ({ children, id }) => {
   } = useDataTable();
   const handleActionClick = (action, itemId) => {
     const item = getRowId(data.find((item) => getRowId(item)._id === itemId));
-    action(item);
+    if (typeof action === "function") action(item);
   };
   return (
     <tr

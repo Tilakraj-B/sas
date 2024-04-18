@@ -23,14 +23,7 @@ class AuthController {
       const payload = { id: user._id, role: user.role };
       const token = generateToken(payload);
 
-      res
-        .status(200)
-        .cookie("token", token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          expires: new Date(Date.now() + 604800000),
-        })
-        .json({ user });
+      res.status(200).json({ user, token });
     } catch (error) {
       next(error);
     }
@@ -64,14 +57,7 @@ class AuthController {
       const payload = { id: newUser._id, role: newUser.role };
       const token = generateToken(payload);
 
-      res
-        .status(201)
-        .cookie("token", token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          expires: new Date(Date.now() + 604800000),
-        })
-        .json({ user: newUser });
+      res.status(201).json({ user: newUser, token });
     } catch (error) {
       next(error);
     }

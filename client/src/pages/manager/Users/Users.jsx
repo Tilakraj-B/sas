@@ -4,6 +4,7 @@ import UsersProvider from "./context/UsersContext";
 import UsersTable from "./components/UsersTable";
 import NewUser from "./components/NewUser";
 import NewUserProvider from "./context/NewUserContext";
+
 const Users = () => {
   return (
     <UsersProvider>

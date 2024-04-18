@@ -1,52 +1,17 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useGetDealsQuery } from "../../../state/api/deals";
+import { useCreateTransactionMutation } from "../../../state/api/transactions";
 
 const CartContext = createContext();
 
 export const useCart = () => useContext(CartContext);
 
-const fakeDeals = [
-  {
-    _id: "1",
-    name: "Buy 1 get 1 free",
-    applicableItems: ["1", "2"],
-    type: "fixed",
-    value: 100,
-    startTimestamp: new Date(),
-    endTimestamp: new Date(),
-  },
-  {
-    _id: "2",
-    name: "10% off on 2 items",
-    applicableItems: ["1", "2"],
-    type: "percentage",
-    value: 10,
-    startTimestamp: new Date(),
-    endTimestamp: new Date(),
-  },
-  {
-    _id: "3",
-    name: "5% off on 1 item",
-    applicableItems: ["3"],
-    type: "percentage",
-    value: 5,
-    startTimestamp: new Date(),
-    endTimestamp: new Date(),
-  },
-  {
-    _id: "4",
-    name: "20% off on 3 items",
-    applicableItems: ["1", "2", "3"],
-    type: "percentage",
-    value: 20,
-    startTimestamp: new Date(),
-    endTimestamp: new Date(),
-  },
-];
-
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
-  const { deals } = useGetDealsQuery();
+  const { data: { deals = [] } = {} } = useGetDealsQuery();
+  const [selectedDealId, setSelectedDealId] = useState(null);
+  const [initiateTransaction, { data, isLoading, isError }] =
+    useCreateTransactionMutation();
 
   const addToCart = (item) => {
     console.log("adding to cart", item);
@@ -93,6 +58,31 @@ const CartProvider = ({ children }) => {
     );
   };
 
+  const selectDeal = (dealId) => {
+    console.log("selecting deal", dealId);
+    setSelectedDealId(dealId);
+  };
+
+  const checkout = () => {
+    const transactionData = {
+      items: cart.map((item) => ({
+        _id: item._id,
+        quantity: item.quantity,
+      })),
+      deal: selectedDealId,
+    };
+
+    initiateTransaction(transactionData);
+  };
+
+  useEffect(() => {
+    if (data) {
+      console.log("transaction successful", data);
+      setCart([]);
+      setSelectedDealId(null);
+    }
+  }, [data]);
+
   const value = {
     items: cart,
     addToCart,
@@ -100,7 +90,12 @@ const CartProvider = ({ children }) => {
     decreaseQuantity,
     removeFromCart,
 
-    deals: getApplicableDeals() || fakeDeals,
+    deals: getApplicableDeals(),
+
+    selectedDealId,
+    selectDeal,
+
+    checkout,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

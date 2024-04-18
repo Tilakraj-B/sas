@@ -5,6 +5,9 @@ import ItemCard from "../ItemCard";
 
 const ItemsGrid = () => {
   const { items } = useItems();
+
+  console.log(items);
+
   return (
     <div className={styles.items}>
       {items.map((item, index) => (

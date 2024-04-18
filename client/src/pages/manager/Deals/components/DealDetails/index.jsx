@@ -2,6 +2,7 @@ import styles from "./DealDetails.module.css";
 import { useSideBar } from "../../context/SideBarContext.jsx";
 import ApplicableItemTile from "../ApplicableItemTile/index.jsx";
 import { useDeals } from "../../context/DealsContext.jsx";
+import { IoChevronBackOutline } from "react-icons/io5";
 
 const DealDetails = () => {
   const { addNewDeal, selectedDeal, deleteDeal } = useSideBar();
@@ -13,10 +14,10 @@ const DealDetails = () => {
 
   return (
     <div className={styles.sidebar}>
-      <button className={styles.button} onClick={addNewDeal}>
-        Add New Deal
-      </button>
-      <div className={styles.divider}></div>
+      <div className={styles.back} onClick={addNewDeal}>
+        <IoChevronBackOutline />
+        Back
+      </div>
       <h2>{selectedDeal.name}</h2>
       <div className={styles.textInfo}>
         <p>Deal Type: {selectedDeal.type}</p>

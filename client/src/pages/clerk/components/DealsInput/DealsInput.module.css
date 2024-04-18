@@ -1,21 +1,32 @@
 .deals {
-  .input {
+  width: 100%;
+
+  .select {
     width: 100%;
-    padding: 0.8rem 1rem;
-    font-size: 0.9rem;
-    font-weight: 400;
-    color: var(--color-text-400);
-    border: 0.15rem solid var(--color-base-300);
+    margin: 1rem 0;
+    padding: 0.5rem;
     border-radius: 0.5rem;
     background-color: var(--color-base-600);
-
-    &::placeholder {
-      color: var(--color-text-200);
-    }
+    border: none;
+    color: var(--color-text-400);
+    font-size: 0.9rem;
+    font-weight: 400;
+    cursor: pointer;
 
     &:focus {
       outline: none;
-      border-color: var(--color-base-500);
+    }
+
+    .option {
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--color-text-400);
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--color-base-700);
+      }
     }
   }
 }

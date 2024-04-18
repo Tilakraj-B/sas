@@ -5,14 +5,14 @@ import Card from "../../../components/Card/Card";
 
 const ItemTable = () => {
   const { items } = useItems();
-  const { viewItemDetails, selectItem, handleDelete } = useSideBar();
+  const { viewItemDetails, handleDelete } = useSideBar();
 
   const actions = {
-    edit: {
+    view: {
       label: "View",
-      action: async (item) => {
-        await selectItem({ item: item });
-        viewItemDetails();
+      action: (itemId) => {
+        viewItemDetails(itemId);
+        console.log(`Viewing row with id ${itemId}`);
       },
     },
     delete: (item) => {

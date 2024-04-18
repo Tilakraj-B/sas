@@ -3,20 +3,31 @@ import styles from "./DealsInput.module.css";
 import { useCart } from "../../context/CartContext";
 
 const DealsInput = () => {
-  const { deals } = useCart();
+  const { deals, selectDeal } = useCart();
 
   return (
     <div className={styles.deals}>
-      <datalist className={styles.datalist} id="deals">
+      <select
+        className={styles.select}
+        id="deals"
+        name="deals"
+        defaultValue="Select Deal"
+        onChange={(e) => selectDeal(e.target.selectedOptions[0].dataset.id)}
+      >
+        <option value="Select Deal" className={styles.option}>
+          Select Deal
+        </option>
         {deals.map((deal) => (
-          <option key={deal._id} value={deal.name} className={styles.option} />
+          <option
+            key={deal._id}
+            data-id={deal._id}
+            value={deal.name}
+            className={styles.option}
+          >
+            {deal.name}
+          </option>
         ))}
-      </datalist>
-      <input
-        className={styles.input}
-        list="deals"
-        placeholder="Select a deal"
-      />
+      </select>
     </div>
   );
 };

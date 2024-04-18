@@ -30,7 +30,7 @@ class ItemsController {
 
       if (!id) throw new BadRequestError("id is required");
 
-      const item = await Item.find(id);
+      const item = await Item.findById(id);
       res.status(200).json({ item });
     } catch (error) {
       next(error);

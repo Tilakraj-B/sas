@@ -4,33 +4,31 @@ import { useSideBar } from "../../context/SideBarContext.jsx";
 const NewItem = () => {
   const { isEditingItem, selectedItem, updateImageUrl, newItem, handleSubmit } =
     useSideBar();
+
   return (
     <div className={styles.sidebar}>
       <h2>{isEditingItem ? "Update Item" : "Add Item"}</h2>
-      <form
-        action="/submit"
-        method="post"
-        enctype="multipart/form-data"
-        onSubmit={handleSubmit}
-      >
-        <img
-          src={
-            isEditingItem
-              ? selectedItem.imageUrl
-              : newItem.imageUrl !== ""
-              ? newItem.imageUrl
-              : "https://static.thenounproject.com/png/559530-200.png"
-          }
-          alt={isEditingItem ? selectedItem.name : "Add Image"}
-          className={styles.itemImage}
-        />
-        <input
-          type="file"
-          id="image"
-          name="image"
-          accept="image/*"
-          onChange={updateImageUrl}
-        />
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="image" className={styles.imageLabel}>
+          <input
+            type="file"
+            id="image"
+            name="image"
+            onChange={updateImageUrl}
+            accept="image/*"
+          />
+          {selectedItem?.imageUrl || newItem?.imageUrl ? (
+            <img
+              src={isEditingItem ? selectedItem.imageUrl : newItem.imageUrl}
+              alt="item"
+              className={styles.image}
+            />
+          ) : (
+            <div className={styles.imagePlaceholder}>
+              <span>Upload Image</span>
+            </div>
+          )}
+        </label>
         <input
           className={styles.input}
           type="text"

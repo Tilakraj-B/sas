@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Sidebar.module.css";
 import { useSidebar } from "./SidebarContext";
 import { Link } from "react-router-dom";
 
 import { IoLogOutOutline } from "react-icons/io5";
+import { useLogoutMutation } from "../../state/api/auth";
+import { useDispatch } from "react-redux";
+import { clearCredentials } from "../../state/slices/auth";
 
 const Sidebar = () => {
   const { items } = useSidebar();
-  console.log(items)
+  const [logout, { data }] = useLogoutMutation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (data) {
+      dispatch(clearCredentials());
+    }
+  }, [data, dispatch]);
+
   return (
     <div className={styles.sidebar}>
       {items
@@ -22,7 +33,10 @@ const Sidebar = () => {
             <div className={styles.label}>{item.label}</div>
           </Link>
         ))}
-      <div className={`${styles.item} ${styles.bottom}`}>
+      <div
+        onClick={() => logout()}
+        className={`${styles.item} ${styles.bottom}`}
+      >
         <div className={styles.icon}>
           <IoLogOutOutline />
         </div>

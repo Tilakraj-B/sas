@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 import {
   useCreateItemMutation,
-  useDeleteItemMutation,
   useUpdateItemMutation,
 } from "../../../../state/api/items";
 const SideBarContext = createContext();
@@ -13,9 +12,10 @@ const SideBarProvider = ({ children }) => {
 
   const [createItem] = useCreateItemMutation();
   const [updateItem] = useUpdateItemMutation();
-  // const [deleteItem ] = useDeleteItemMutation();
+  const [selectedItemId, setSelectedItemId] = useState(null);
 
   const addNewItem = () => {
+    setSelectedItemId(null);
     setIsEditingItem(false);
     setViewItem(false);
     setIsAddingNewItem(true);
@@ -23,7 +23,8 @@ const SideBarProvider = ({ children }) => {
 
   const [viewItem, setViewItem] = useState(false, null);
 
-  const viewItemDetails = () => {
+  const viewItemDetails = (itemId) => {
+    setSelectedItemId(itemId);
     setIsAddingNewItem(false);
     setIsEditingItem(false);
     setViewItem(true);
@@ -65,11 +66,13 @@ const SideBarProvider = ({ children }) => {
     quantity: 0,
   });
 
-  const updateImageUrl = (imageFile) => {
-    const imageUrl = URL.createObjectURL(imageFile.target.files[0]);
+  const updateImageUrl = (e) => {
+    console.log(e.target.files[0]);
+    const imageUrl = URL.createObjectURL(e.target.files[0]);
+    console.log(imageUrl);
     if (isEditingItem) {
-      setSelectedItem((selectedItem) => ({
-        ...selectItem,
+      setSelectedItem((item) => ({
+        ...item,
         imageUrl: imageUrl,
       }));
     }
@@ -121,6 +124,7 @@ const SideBarProvider = ({ children }) => {
     updateImageUrl,
     handleSubmit,
     handleDelete,
+    selectedItemId,
   };
 
   return (

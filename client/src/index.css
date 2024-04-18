@@ -21,7 +21,7 @@ code {
 :root {
   --color-primary-200: hsl(345, 100%, 87%);
   --color-primary-300: hsl(345, 100%, 77%);
-  --color-primary-400: hsl(345, 100%, 57%);
+  --color-primary-400: #ff245b;
   --color-primary-500: hsl(345, 100%, 47%);
 
   --color-primary-400-hsl: 345, 100%, 57%;

@@ -4,6 +4,7 @@ import DealsTable from "./components/DealsTable";
 import styles from "./Deals.module.css";
 import SideBar from "./components/Sidebar";
 import SideBarProvider from "./context/SideBarContext";
+
 const Deals = () => {
   return (
     <DealsProvider>
