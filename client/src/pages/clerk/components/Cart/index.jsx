@@ -6,7 +6,7 @@ import DealsInput from "../DealsInput";
 import PrimaryButton from "../../../../components/PrimaryButton";
 
 const Cart = () => {
-  const { items, checkout } = useCart();
+  const { items, checkout, InvoicePDFButton } = useCart();
 
   return (
     <div className={styles.sidebar}>
@@ -47,6 +47,7 @@ const Cart = () => {
             )}
           </span>
         </div>
+        <InvoicePDFButton />
         <PrimaryButton
           title={
             <>
