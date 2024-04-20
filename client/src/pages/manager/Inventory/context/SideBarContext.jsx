@@ -4,6 +4,9 @@ import {
   useDeleteItemMutation,
   useUpdateItemMutation,
 } from "../../../../state/api/items";
+const { createCanvas } = require("canvas");
+const JsBarcode = require("jsbarcode");
+
 const SideBarContext = createContext();
 
 export const useSideBar = () => useContext(SideBarContext);
@@ -11,7 +14,8 @@ export const useSideBar = () => useContext(SideBarContext);
 const SideBarProvider = ({ children }) => {
   const [isAddingNewItem, setIsAddingNewItem] = useState(true);
 
-  const [createItem] = useCreateItemMutation();
+  const [createItem, { isLoading, isError, isSuccess, data, error }] =
+    useCreateItemMutation();
   const [updateItem] = useUpdateItemMutation();
   const [deleteItem] = useDeleteItemMutation();
   const [selectedItemId, setSelectedItemId] = useState(null);
@@ -68,7 +72,7 @@ const SideBarProvider = ({ children }) => {
     quantity: 0,
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Gather all form inputs
     const formData = new FormData(e.target);
@@ -88,9 +92,32 @@ const SideBarProvider = ({ children }) => {
       updateItem(selectItem._id, selectItem);
     } else {
       setNewItem(newItemData);
-      createItem(newItemData);
+      const data = await createItem(newItemData);
+      const newItem = data?.["data"]?.["item"];
+      console.log(newItem);
+      createBarcode(newItem);
     }
     e.target.reset();
+  };
+
+  const createBarcode = (item) => {
+    const canvas = createCanvas(200, 100);
+
+    // Generate the barcode
+    JsBarcode(canvas, item._id, {
+      format: "CODE128",
+      displayValue: true,
+      fontSize: 20,
+      textMargin: 10,
+    });
+
+    // Convert the canvas to a base64 encoded image
+    const barcodeImage = canvas.toDataURL();
+
+    const link = document.createElement("a");
+    link.href = barcodeImage;
+    link.download = item.name + ".png";
+    link.click();
   };
 
   const handleDelete = (itemId) => {
