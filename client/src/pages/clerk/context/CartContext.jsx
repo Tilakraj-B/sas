@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useGetDealsQuery } from "../../../state/api/deals";
+import { useGetItemQuery } from "../../../state/api/items";
 import { useCreateTransactionMutation } from "../../../state/api/transactions";
 import {
   Document,
@@ -203,6 +204,14 @@ const CartProvider = ({ children }) => {
   const [initiateTransaction, { data, isLoading, isError }] =
     useCreateTransactionMutation();
   const [transaction, setTransaction] = useState(null);
+  const [isScanningQr, setIsScanningQr] = useState(false);
+
+  const scanBarcode = () => {
+    setIsScanningQr(true);
+  };
+  const stopScan = () => {
+    setIsScanningQr(false);
+  };
 
   const addToCart = (item) => {
     console.log("adding to cart", item);
@@ -215,6 +224,7 @@ const CartProvider = ({ children }) => {
       setCart([...cart, { ...item, quantity: 1 }]);
     }
   };
+
 
   const increaseQuantity = (item) => {
     console.log("increasing quantity", item);
@@ -294,9 +304,10 @@ const CartProvider = ({ children }) => {
 
     selectedDealId,
     selectDeal,
-
     checkout,
-
+    isScanningQr,
+    scanBarcode,
+    stopScan,
     InvoicePDFButton: transaction
       ? () => <InvoicePDF transaction={transaction} />
       : () => null,
