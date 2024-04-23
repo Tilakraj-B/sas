@@ -5,7 +5,6 @@ import CartItemRow from "../CartItemTile";
 import DealsInput from "../DealsInput";
 import PrimaryButton from "../../../../components/PrimaryButton";
 import { IoChevronBackOutline } from "react-icons/io5";
-import BarcodeScanner from "../BarcodeScanner";
 
 const Cart = () => {
   const {
@@ -14,7 +13,6 @@ const Cart = () => {
     InvoicePDFButton,
     deals,
     selectedDealId,
-    isScanningQr,
     scanBarcode,
   } = useCart();
 
@@ -28,12 +26,6 @@ const Cart = () => {
     if (deal.type === "percentage") return total * deal.value;
     else return deal.value;
   };
-
-  console.log("hi");
-  console.log(isScanningQr);
-  if (isScanningQr === true) {
-    return <BarcodeScanner />;
-  }
 
   return (
     <div className={styles.sidebar}>

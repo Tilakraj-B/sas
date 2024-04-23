@@ -6,6 +6,7 @@ import { MdOutlineStorefront } from "react-icons/md";
 import { BsBoxes } from "react-icons/bs";
 import { FiUsers } from "react-icons/fi";
 import { RiCoupon3Line } from "react-icons/ri";
+import { PiChartLine } from "react-icons/pi";
 
 import { selectRole } from "../../state/slices/auth";
 
@@ -44,6 +45,13 @@ const SidebarProvider = ({ children }) => {
       path: "/manager/deals",
       icon: <RiCoupon3Line />,
       active: pathname === "/manager/deals",
+      show: role === "manager",
+    },
+    {
+      label: "Sales",
+      path: "/manager/sales",
+      icon: <PiChartLine />,
+      active: pathname === "/manager/sales",
       show: role === "manager",
     },
   ];

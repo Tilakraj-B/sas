@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useGetDealsQuery } from "../../../state/api/deals";
-import { useGetItemQuery } from "../../../state/api/items";
 import { useCreateTransactionMutation } from "../../../state/api/transactions";
 import {
   Document,

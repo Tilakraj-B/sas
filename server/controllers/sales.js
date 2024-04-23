@@ -12,7 +12,7 @@ class SalesController {
       const sales = await Sale.find({
         item: itemId,
         date: { $gte: start, $lte: end },
-      });
+      }).populate("item");
       res.status(200).json({ sales });
     } catch (error) {
       next(error);

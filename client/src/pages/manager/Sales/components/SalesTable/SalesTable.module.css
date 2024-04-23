@@ -1,0 +1,22 @@
+.noSales {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 300px;
+  width: 100%;
+  font-size: 0.9rem;
+  color: var(--color-text-300);
+  background-color: var(--color-base-600);
+  border-radius: 0.5rem;
+}
+
+.profit {
+  font-weight: 500;
+  color: var(--color-success-400);
+}
+
+.loss {
+  font-weight: 500;
+  color: var(--color-error-400);
+}

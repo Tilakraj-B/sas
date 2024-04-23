@@ -45,6 +45,7 @@ code {
   --color-gray-200: hsl(0, 0%, 95%);
   --color-gray-300: hsl(0, 0%, 92%);
 
+  --color-success-400: hsl(127, 76%, 46%);
   --color-error-400: hsl(348, 100%, 60%);
 
   --width-sidebar: 100px;

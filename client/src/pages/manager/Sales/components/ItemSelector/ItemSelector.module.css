@@ -1,0 +1,16 @@
+.container select {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+
+.container select:focus {
+  border: none;
+  outline: 0;
+}
+
+.container select option {
+  font-size: 1rem;
+}
