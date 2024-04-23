@@ -5,6 +5,10 @@ import CartItemRow from "../CartItemTile";
 import DealsInput from "../DealsInput";
 import PrimaryButton from "../../../../components/PrimaryButton";
 import { IoChevronBackOutline } from "react-icons/io5";
+<<<<<<< HEAD
+=======
+import BarCodeScanner from "../BarcodeScanner";
+>>>>>>> f706d2d6bd681f6776180dc44e63877c1bc45a1c
 
 const Cart = () => {
   const {
@@ -14,6 +18,11 @@ const Cart = () => {
     deals,
     selectedDealId,
     scanBarcode,
+<<<<<<< HEAD
+=======
+    stopScan,
+    isScanningBarcode,
+>>>>>>> f706d2d6bd681f6776180dc44e63877c1bc45a1c
   } = useCart();
 
   const calculateDiscoutValue = () => {
@@ -29,14 +38,16 @@ const Cart = () => {
 
   return (
     <div className={styles.sidebar}>
-      <div className="row">
-        <div className={styles.back} onClick={scanBarcode}>
-          <IoChevronBackOutline />
-        </div>
-        <h2>
-          Order <span>Cart</span>
-        </h2>
+      <div
+        className={styles.back}
+        onClick={isScanningBarcode !== true ? scanBarcode : stopScan}
+      >
+        {isScanningBarcode !== true ? "Scan Barcode" : "Stop Scan"}
       </div>
+      {isScanningBarcode !== null && isScanningBarcode && <BarCodeScanner />}
+      <h2>
+        Order <span>Cart</span>
+      </h2>
       <div className={styles.items}>
         {items.length > 0 ? (
           items.map((item, index) => <CartItemRow key={item._id} item={item} />)
