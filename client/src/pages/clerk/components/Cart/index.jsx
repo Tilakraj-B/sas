@@ -4,10 +4,20 @@ import { useCart } from "../../context/CartContext";
 import CartItemRow from "../CartItemTile";
 import DealsInput from "../DealsInput";
 import PrimaryButton from "../../../../components/PrimaryButton";
+import { IoChevronBackOutline } from "react-icons/io5";
+import BarCodeScanner from "../BarcodeScanner";
 
 const Cart = () => {
-  const { items, checkout, InvoicePDFButton, deals, selectedDealId } =
-    useCart();
+  const {
+    items,
+    checkout,
+    InvoicePDFButton,
+    deals,
+    selectedDealId,
+    scanBarcode,
+    stopScan,
+    isScanningBarcode,
+  } = useCart();
 
   const calculateDiscoutValue = () => {
     if (!selectedDealId) return 0;
@@ -22,6 +32,13 @@ const Cart = () => {
 
   return (
     <div className={styles.sidebar}>
+      <div
+        className={styles.back}
+        onClick={isScanningBarcode !== true ? scanBarcode : stopScan}
+      >
+        {isScanningBarcode !== true ? "Scan Barcode" : "Stop Scan"}
+      </div>
+      {isScanningBarcode !== null && isScanningBarcode && <BarCodeScanner />}
       <h2>
         Order <span>Cart</span>
       </h2>

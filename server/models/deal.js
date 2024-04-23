@@ -20,14 +20,6 @@ const dealSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  startTimestamp: {
-    type: Date,
-    required: true,
-  },
-  endTimestamp: {
-    type: Date,
-    required: true,
-  },
 });
 
 module.exports = mongoose.model("Deal", dealSchema);

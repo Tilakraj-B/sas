@@ -64,3 +64,15 @@
     }
   }
 }
+
+.back {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem;
+  gap: 0.5rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--color-base-500);
+  }
+}

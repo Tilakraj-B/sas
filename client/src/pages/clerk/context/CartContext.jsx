@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useGetDealsQuery } from "../../../state/api/deals";
 import { useCreateTransactionMutation } from "../../../state/api/transactions";
+import Quagga from "quagga"; // Import QuaggaJS
 import {
   Document,
   Page,
@@ -9,6 +10,7 @@ import {
   StyleSheet,
   PDFDownloadLink,
 } from "@react-pdf/renderer";
+import { useGetItemsQuery } from "../../../state/api/items";
 
 const CartContext = createContext();
 
@@ -199,10 +201,81 @@ const InvoicePDF = ({ transaction }) => (
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const { data: { deals = [] } = {} } = useGetDealsQuery();
+  const { data: { items = [] } = {} } = useGetItemsQuery();
+
   const [selectedDealId, setSelectedDealId] = useState(null);
   const [initiateTransaction, { data, isLoading, isError }] =
     useCreateTransactionMutation();
   const [transaction, setTransaction] = useState(null);
+
+  const [isScanningBarcode, setIsScanningBarcode] = useState(null);
+
+  const scanBarcode = () => {
+    setIsScanningBarcode(true);
+  };
+  const startScanner = () => {
+    Quagga.init(
+      {
+        inputStream: {
+          name: "Live",
+          type: "LiveStream",
+          target: document.querySelector("#scanner-container"),
+          constraints: {
+            width: 300,
+            height: 200,
+            facingMode: "environment", // or user
+          },
+        },
+        decoder: {
+          readers: [
+            "code_128_reader",
+            "ean_reader",
+            "ean_8_reader",
+            "code_39_reader",
+            "code_39_vin_reader",
+            "codabar_reader",
+            "upc_reader",
+            "upc_e_reader",
+            "i2of5_reader",
+          ],
+        },
+      },
+      (err) => {
+        if (err) {
+          console.error("Failed to initialize Quagga:", err);
+          return;
+        }
+        Quagga.start();
+        setIsScanningBarcode(true); // Update state to indicate that the scanner is active
+      }
+    );
+
+    Quagga.onDetected((data) => {
+      if (data && data.codeResult && data.codeResult.code) {
+        // Handle the detected barcode data
+        console.log("Detected barcode:", data.codeResult.code);
+        const item = items.find((item) => item.id === data.codeResult.code);
+        addToCart(item);
+      }
+    });
+  };
+
+  const stopScan = () => {
+    setIsScanningBarcode(false);
+  };
+
+  useEffect(() => {
+    if (isScanningBarcode) {
+      startScanner();
+      console.log("Scanner Started"); // Start the scanner when scanBarcode state is true
+    } else {
+      if (isScanningBarcode === false) Quagga.stop(); // Stop the scanner when scanBarcode state is false
+    }
+
+    return () => {
+      if (isScanningBarcode !== null) Quagga.stop(); // Clean up the scanner when component unmounts
+    };
+  }, [isScanningBarcode]);
 
   const addToCart = (item) => {
     console.log("adding to cart", item);
@@ -289,14 +362,14 @@ const CartProvider = ({ children }) => {
     increaseQuantity,
     decreaseQuantity,
     removeFromCart,
-
+    isScanningBarcode,
     deals: getApplicableDeals(),
 
     selectedDealId,
     selectDeal,
-
+    scanBarcode,
     checkout,
-
+    stopScan,
     InvoicePDFButton: transaction
       ? () => <InvoicePDF transaction={transaction} />
       : () => null,
