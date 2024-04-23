@@ -207,18 +207,8 @@ const CartProvider = ({ children }) => {
   const [initiateTransaction, { data, isLoading, isError }] =
     useCreateTransactionMutation();
   const [transaction, setTransaction] = useState(null);
-  const [isScanningQr, setIsScanningQr] = useState(false);
-
-  const stopScan = () => {
-    setIsScanningQr(false);
-  };
-
   const [isScanningBarcode, setIsScanningBarcode] = useState(null);
 
-  const scanBarcode = () => {
-    setIsScanningBarcode(true);
-  };
-  
   const startScanner = () => {
     Quagga.init(
       {
@@ -227,8 +217,6 @@ const CartProvider = ({ children }) => {
           type: "LiveStream",
           target: document.querySelector("#scanner-container"),
           constraints: {
-            width: 300,
-            height: 200,
             facingMode: "environment", // or user
           },
         },
@@ -260,24 +248,27 @@ const CartProvider = ({ children }) => {
       if (data && data.codeResult && data.codeResult.code) {
         // Handle the detected barcode data
         console.log("Detected barcode:", data.codeResult.code);
-        const item = items.find((item) => item.id === data.codeResult.code);
+        const item = items.find((item) => item._id === data.codeResult.code);
         addToCart(item);
       }
     });
   };
 
-  useEffect(() => {
+  const scanBarcode = () => {
     if (isScanningBarcode) {
-      startScanner();
-      console.log("Scanner Started"); // Start the scanner when scanBarcode state is true
-    } else {
-      if (isScanningBarcode === false) Quagga.stop(); // Stop the scanner when scanBarcode state is false
+      Quagga.stop();
+      setIsScanningBarcode(false);
+      return;
     }
+    startScanner();
+    setIsScanningBarcode(true);
+  };
 
-    return () => {
-      if (isScanningBarcode !== null) Quagga.stop(); // Clean up the scanner when component unmounts
-    };
-  }, [isScanningBarcode]);
+  const stopScan = () => {
+    if (!isScanningBarcode) return;
+    Quagga.stop();
+    setIsScanningBarcode(false);
+  };
 
   const addToCart = (item) => {
     console.log("adding to cart", item);
@@ -290,7 +281,6 @@ const CartProvider = ({ children }) => {
       setCart([...cart, { ...item, quantity: 1 }]);
     }
   };
-
 
   const increaseQuantity = (item) => {
     console.log("increasing quantity", item);
@@ -371,7 +361,6 @@ const CartProvider = ({ children }) => {
     selectedDealId,
     selectDeal,
     checkout,
-    isScanningQr,
     scanBarcode,
     stopScan,
     InvoicePDFButton: transaction
